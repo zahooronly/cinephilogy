@@ -1,6 +1,6 @@
-export const AuthWrapper = ({ headerText, children }) => {
+export const AuthWrapper = ({ headerText, children, className }) => {
   return (
-    <div className="flex justify-center items-center flex-col">
+    <div className={`flex justify-center items-center flex-col ${className}`}>
       <h2 className="scroll-m-20 border-b pb-1 text-3xl font-semibold tracking-tighter">
         Cinephilogy Auth
       </h2>
