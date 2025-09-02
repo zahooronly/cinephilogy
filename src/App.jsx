@@ -1,8 +1,12 @@
-import { Header } from "./components/Header/Header";
+import { Header } from "./components/layout/Header";
+import LoginPage from "./pages/LoginPage";
 
 function App() {
   return (
-    <Header />
+    <>
+      <Header />
+      <LoginPage />
+    </>
   );
 }
 

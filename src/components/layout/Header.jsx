@@ -1,4 +1,9 @@
 export const Header = () => {
+  const navigationLinks = [
+    { title: "All", url: "/" },
+    { title: "Movies", url: "/movies" },
+    { title: "TV", url: "/tv" },
+  ];
   return (
     <nav className="bg-white text-black px-8 py-4 flex items-center justify-between fixed w-full top-0 z-50">
       <div className="text-3xl font-extrabold -tracking-wider select-none cursor-pointer hover:text-gray-800 transition-colors uppercase">
@@ -7,14 +12,10 @@ export const Header = () => {
 
       <div className="flex-1 mx-12">
         <ul className="flex justify-center space-x-8">
-          {[
-            { title: "All", url: "/" },
-            { title: "Movies", url: "/movies" },
-            { title: "TV", url: "/tv" },
-          ].map((genre) => (
+          {navigationLinks.map((genre) => (
             <li
               key={genre.url}
-              className="cursor-pointer hover:text-gray-800 transition-colors font-medium relative group"
+              className="cursor-pointer hover:text-gray-800 transition-colors font-light relative group"
             >
               {genre.title}
               <span className="absolute bottom-0 left-0 w-0 h-0.5 transition-all duration-300 group-hover:w-full"></span>

@@ -1,4 +1,4 @@
-import { AuthWrapper } from "../components/auth/AuthWrapper";
+import { AuthWrapper } from "../components/layout/AuthWrapper";
 import { useLogin } from "../hooks/useLogin";
 
 const LoginPage = () => {
