@@ -1,5 +1,5 @@
-import { AuthWrapper } from "../components/layout/AuthWrapper";
-import { useLogin } from "../hooks/useLogin";
+import { AuthWrapper } from "../../components/layout/AuthWrapper";
+import { useLogin } from "../../hooks/useLogin";
 
 const LoginPage = () => {
   const { formData, setFormData, showPassword, setShowPassword, loginHandler } =
