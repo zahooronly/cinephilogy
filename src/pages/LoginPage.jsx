@@ -38,7 +38,7 @@ const LoginPage = () => {
               />
               <button
                 type="button"
-                className="absolute right-2 top-1/2 -translate-y-1/2"
+                className="absolute cursor-pointer right-2 top-1/2 -translate-y-1/2"
                 onClick={() => setShowPassword(!showPassword)}
               >
                 {showPassword ? (
