@@ -1,4 +1,5 @@
 import { AuthWrapper } from "../../components/layout/AuthWrapper";
+import { Button } from "../../components/ui/Button";
 import { useLogin } from "../../hooks/useLogin";
 
 const LoginPage = () => {
@@ -16,7 +17,7 @@ const LoginPage = () => {
               type="email"
               id="email"
               placeholder="email@example.com"
-              className="w-full p-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-black transition-all duration-200"
+              className="w-full p-2 border focus:outline-none focus:ring-1 focus:ring-black transition-all duration-200"
               onChange={(e) =>
                 setFormData({ ...formData, email: e.target.value })
               }
@@ -31,7 +32,7 @@ const LoginPage = () => {
                 type={showPassword ? "text" : "password"}
                 id="password"
                 placeholder="••••••••"
-                className="w-full p-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-black transition-all duration-200"
+                className="w-full p-2 border focus:outline-none focus:ring-1 focus:ring-black transition-all duration-200"
                 onChange={(e) =>
                   setFormData({ ...formData, password: e.target.value })
                 }
@@ -71,12 +72,12 @@ const LoginPage = () => {
               </button>
             </div>
           </div>
-          <button
-            className="w-full p-2 mt-2 text-sm font-medium text-white bg-black rounded-md hover:bg-black/90 transition-all duration-200 cursor-pointer"
+          <Button
+            // className="w-full p-2 mt-2 text-sm font-medium text-white bg-black hover:bg-black/90 transition-all duration-200 cursor-pointer"
             onClick={loginHandler}
           >
             Login
-          </button>
+          </Button>
         </form>
       </AuthWrapper>
     </main>

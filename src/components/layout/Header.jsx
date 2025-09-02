@@ -1,6 +1,8 @@
+import { Button } from "../ui/Button";
+
 export const Header = () => {
   const navigationLinks = [
-    { title: "All", url: "/" },
+    { title: "Home", url: "/" },
     { title: "Movies", url: "/movies" },
     { title: "TV", url: "/tv" },
   ];
@@ -29,7 +31,7 @@ export const Header = () => {
           <input
             type="text"
             placeholder="Search movies..."
-            className="bg-white text-zinc-900 px-4 py-2 rounded-full w-64 focus:outline-none focus:ring-2 focus:ring-gray-500 transition-all"
+            className="bg-white font-thin text-zinc-900 px-4 py-2 w-64 focus:outline-none focus:ring-2 focus:ring-black transition-all"
           />
           <svg
             className="w-5 h-5 absolute right-3 top-2.5 text-gray-800"
@@ -45,9 +47,9 @@ export const Header = () => {
             />
           </svg>
         </div>
-        <button className="bg-white text-black hover:bg-gray-200 px-6 py-2 rounded-full font-medium transition-colors">
+        <Button>
           Login
-        </button>
+        </Button>
       </div>
     </nav>
   );
