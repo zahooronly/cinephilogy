@@ -1,11 +1,7 @@
-import { LoginForm } from "./components/auth/login/LoginForm";
+import LoginPage from "./pages/LoginPage";
 
 function App() {
-  return (
-    <main className="flex justify-center items-center h-screen">
-      <LoginForm />
-    </main>
-  );
+  return <LoginPage />;
 }
 
 export default App;
