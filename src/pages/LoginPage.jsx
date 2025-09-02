@@ -1,8 +1,6 @@
 import { useState } from "react";
 import { AuthWrapper } from "../components/auth/AuthWrapper";
 
-const authApiUrl = await import.meta.env.VITE_AUTH_API_URL;
-
 const LoginPage = () => {
   const [formData, setFormData] = useState({
     email: "",
@@ -13,7 +11,7 @@ const LoginPage = () => {
     e.preventDefault();
     console.log(formData);
     try {
-      fetch(authApiUrl, {
+      fetch(import.meta.env.VITE_AUTH_API_URL, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
