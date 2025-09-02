@@ -1,7 +1,7 @@
 import { Button } from "../ui/Button";
 
 export const Header = () => {
-  const navigationLinks = [
+  const NAVIVATION_LINKS = [
     { title: "Home", url: "/" },
     { title: "Movies", url: "/movies" },
     { title: "TV", url: "/tv" },
@@ -14,7 +14,7 @@ export const Header = () => {
 
       <div className="flex-1 mx-12">
         <ul className="flex justify-center space-x-8">
-          {navigationLinks.map((genre) => (
+          {NAVIVATION_LINKS.map((genre) => (
             <li
               key={genre.url}
               className="cursor-pointer hover:text-gray-800 transition-colors font-light relative group"
