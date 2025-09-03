@@ -1,4 +1,5 @@
 import { Button } from "../ui/Button";
+import { CTAButton } from "../ui/CTAButton";
 import { Tag } from "../ui/Tag";
 
 export const Hero = () => {
@@ -30,7 +31,7 @@ export const Hero = () => {
           mission through a wormhole to find a new home for humanity.
         </p>
         <div className="flex gap-4">
-          <Button>Watch Now</Button>
+          <CTAButton>Watch Now</CTAButton>
         </div>
       </div>
     </div>
