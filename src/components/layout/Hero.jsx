@@ -9,6 +9,7 @@ export const Hero = () => {
         <img
           src="https://images.squarespace-cdn.com/content/v1/5a78ab8490badee028bef0e9/1568935524292-TPSLMXHD9HE6PKN02YOG/Interstellar.jpg"
           alt="Interstellar movie banner"
+          draggable={false}
           className="w-full h-full object-cover filter brightness-75"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent"></div>
