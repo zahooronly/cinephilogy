@@ -5,7 +5,7 @@ import { getUser } from "../../lib/utils/getUser";
 import { NAVIVATION_LINKS } from "../../lib/constants/constants";
 
 export const Header = () => {
-  const { logout } = useLogout();
+  const logout = useLogout();
   const user = getUser();
   return (
     <nav className="bg-white text-black px-8 py-4 flex items-center justify-between fixed w-full top-0 z-50">
