@@ -10,12 +10,16 @@ import {
 } from "react-router";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
+import Movies from "./pages/Movies/index.jsx";
+import TV from "./pages/TV/index.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
       <Route index element={<Home />} />
       <Route path="login" element={<Login />} />
+      <Route path="movies" element={<Movies />} />
+      <Route path="tv" element={<TV />} />
     </Route>
   )
 );
