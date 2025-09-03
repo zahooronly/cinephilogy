@@ -105,6 +105,7 @@ export const Footer = () => {
             <p>&copy; {currentYear} Cinephilogy. All Rights Reserved.</p>
           </div>
         </div>
+        {/* asdfsd */}
       </div>
     </footer>
   );
