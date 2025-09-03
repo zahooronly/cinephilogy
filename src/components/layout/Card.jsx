@@ -2,16 +2,18 @@ import { useState } from "react";
 import StarIcon from "../../assets/svgs/star.svg?react";
 import PlayIcon from "../../assets/svgs/play.svg?react";
 import BookmarkIcon from "../../assets/svgs/bookmark.svg?react";
+import { Tag } from "../ui/Tag";
+import { Link } from "react-router";
 
 export const Card = ({
   title,
   imageUrl,
   year,
   rating,
-  type,
+  homepageURL,
   genres = [],
   overview = "",
-  voteAverage = 0,
+  voteCount = 0,
   runtime = 0,
 }) => {
   const [isHovered, setIsHovered] = useState(false);
@@ -39,7 +41,7 @@ export const Card = ({
 
           <div className="absolute top-3 right-3 bg-black/70 backdrop-blur-sm text-white px-2 py-1 rounded-md flex items-center">
             <StarIcon className="w-4 h-4 text-yellow-400 mr-1" />
-            <span>{voteAverage ? voteAverage.toFixed(1) : rating}</span>
+            <span>{voteCount ? voteCount.toFixed(1) : rating}</span>
           </div>
         </div>
 
@@ -60,10 +62,8 @@ export const Card = ({
 
         {isHovered && (
           <div className="absolute rounded-xl inset-0 bg-gradient-to-t from-black via-black/90 to-black/70 flex flex-col justify-between p-6 transition-all duration-300">
-            <div>
-              <span className="bg-white/10 backdrop-blur-sm px-2 py-1 rounded-md text-xs font-medium text-white uppercase tracking-wider">
-                {type}
-              </span>
+            <div className="text-white">
+              <Tag title="MOVIE" />
             </div>
 
             <div>
@@ -76,7 +76,7 @@ export const Card = ({
                 <span className="text-gray-500">•</span>
                 <span className="flex items-center text-yellow-400">
                   <StarIcon className="w-4 h-4 mr-1" />
-                  {voteAverage ? voteAverage.toFixed(1) : rating}
+                  {voteCount ? voteCount.toFixed(1) : rating}
                 </span>
                 {runtime > 0 && (
                   <>
@@ -90,14 +90,14 @@ export const Card = ({
 
               {genres.length > 0 && (
                 <div className="flex flex-wrap gap-1 mb-3">
-                  {genres.slice(0, 3).map((genre, index) => (
-                    <span
-                      key={index}
-                      className="bg-white/10 text-xs px-2 py-0.5 rounded-full text-gray-300"
-                    >
-                      {typeof genre === "object" ? genre.name : genre}
-                    </span>
+                  {genres.slice(0, 3).map((genre) => (
+                    <Tag
+                      key={genre.id}
+                    //   className="bg-white/10 text-xs px-2 py-0.5 rounded-full text-gray-300"
+                      title={genre.name}
+                    />
                   ))}
+
                 </div>
               )}
 
@@ -108,12 +108,17 @@ export const Card = ({
               )}
 
               <div className="flex items-center gap-2 mt-2">
-                <button className="bg-white/10 hover:bg-white/20 text-white text-xs px-3 py-1 rounded-md transition-colors">
+                <a
+                  href={homepageURL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-white/10 hover:bg-white/20 text-white text-xs px-3 py-1 rounded-md transition-colors"
+                >
                   <span className="flex items-center">
                     <PlayIcon className="w-3 h-3 mr-1" />
-                    Watch
+                    Homepage
                   </span>
-                </button>
+                </a>
               </div>
             </div>
           </div>

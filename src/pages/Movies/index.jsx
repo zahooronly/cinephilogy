@@ -1,19 +1,28 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import { Card } from "../../components/layout/Card";
+import { MoviesAPI } from "../../services/api";
+import { IMAGES_BASE_URL } from "../../lib/constants";
 
 const Movies = () => {
+  const [movies, setMovies] = useState([]);
+  useEffect(() => {
+    MoviesAPI.getAll().then((data) => setMovies(data.results));
+  }, []);
   return (
-    <div>
-      <h1 className="text-3xl font-bold">Movies</h1>
+    <div className="mt-[74px]">
       <div className="flex flex-wrap justify-center items-center gap-5">
-        {Array.from({ length: 10 }).map((_, index) => (
+        {movies.map((movie, index) => (
           <Card
             key={index}
-            title={`Movie Title ${index + 1}`}
-            imageUrl="https://m.media-amazon.com/images/I/81PB+SCj2XL._AC_SL1500_.jpg"
-            year={`${2020 + index}`}
-            rating={`${(Math.random() * 5).toFixed(1)}`}
-            type={index % 2 === 0 ? "movie" : "series"}
+            title={movie.title}
+            imageUrl={`${IMAGES_BASE_URL}${movie.poster_path}`}
+            year={movie.release_date}
+            rating={movie.vote_average}
+            voteCount={movie.vote_count}
+            runtime={movie.runtime}
+            genres={movie.genres}
+            homepageURL={movie.homepage}
+            overview={movie.overview}
           />
         ))}
       </div>
