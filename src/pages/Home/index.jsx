@@ -7,7 +7,7 @@ const Home = () => {
   return (
     <div className="mt-[74px]">
       <Hero />
-      {!user && <CTA />}
+      {!user && (<CTA />)}
     </div>
   );
 };
