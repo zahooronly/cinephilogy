@@ -1,5 +1,5 @@
-import React from "react";
-import { Button } from "../ui/Button";
+import { Link } from "react-router";
+import { CTAButton } from "../ui/CTAButton";
 
 export const CTA = () => {
   return (
@@ -18,7 +18,9 @@ export const CTA = () => {
         <p className="text-white text-lg md:text-2xl font-light">
           Watch movies, series, and more.
         </p>
-        <Button>Get Started</Button>
+        <Link to="/login">
+          <CTAButton>Get Started</CTAButton>
+        </Link>
       </div>
     </div>
   );
