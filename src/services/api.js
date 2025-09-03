@@ -1,4 +1,6 @@
+import axios from "axios";
 import axiosInstance from "./axios";
+import { AUTH_API_URL } from "../lib/constants";
 
 const API_URLS = {
   MOVIES: {
@@ -48,6 +50,13 @@ export const MoviesAPI = {
 export const TvAPI = {
   getAll: async () => {
     const response = await axiosInstance.get(API_URLS.TV.ALL);
+    return response.data;
+  },
+};
+
+export const AuthAPI = {
+  login: async (data) => {
+    const response = await axios.post(`${AUTH_API_URL}/users/login/`, data);
     return response.data;
   },
 };

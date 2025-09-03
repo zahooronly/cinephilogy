@@ -1,43 +1,33 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AuthWrapper } from "../../components/layout/AuthWrapper";
 import { Button } from "../../components/ui/Button";
 import { AUTH_API_URL } from "../../lib/constants";
 import { useNavigate } from "react-router";
+import { getUser } from "../../lib/utils/getUser";
+import { AuthAPI } from "../../services/api";
 
 const Login = () => {
+  const navigate = useNavigate();
+  const user = getUser();
+  useEffect(() => {
+    if (user) navigate("/");
+  }, [user, navigate]);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
-  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const loginHandler = (e) => {
     e.preventDefault();
     try {
-      fetch(`${AUTH_API_URL}/users/login/`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      })
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Something went wrong!");
-          }
-          return response.json();
-        })
-        .then(() => {
-          localStorage.setItem("token", import.meta.env.VITE_ACCESS_TOKEN);
-          setFormData({
-            email: "",
-            password: "",
-          });
-          navigate("/");
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
+      AuthAPI.login(formData).then((data) => {
+        localStorage.setItem("token", data.access);
+        navigate("/");
+      });
+      setFormData({
+        email: "",
+        password: "",
+      });
     } catch (err) {
       console.error("Error:", err);
     }
