@@ -2,12 +2,14 @@ import { useState } from "react";
 import { AuthWrapper } from "../../components/layout/AuthWrapper";
 import { Button } from "../../components/ui/Button";
 import { AUTH_API_URL } from "../../lib/constants/constants";
+import { useNavigate } from "react-router";
 
 const Login = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const loginHandler = (e) => {
     e.preventDefault();
@@ -27,6 +29,11 @@ const Login = () => {
         })
         .then(() => {
           localStorage.setItem("token", import.meta.env.VITE_ACCESS_TOKEN);
+          setFormData({
+            email: "",
+            password: "",
+          });
+          navigate("/");
         })
         .catch((error) => {
           console.error("Error:", error);
@@ -34,10 +41,6 @@ const Login = () => {
     } catch (err) {
       console.error("Error:", err);
     }
-    setFormData({
-      email: "",
-      password: "",
-    });
   };
   return (
     <main className="flex justify-center items-center h-screen">
