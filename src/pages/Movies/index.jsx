@@ -17,12 +17,11 @@ const Movies = () => {
             title={movie.title}
             imageUrl={`${IMAGES_BASE_URL}${movie.poster_path}`}
             year={movie.release_date}
-            rating={movie.vote_average}
+            type="MOVIE"
             voteCount={movie.vote_count}
             runtime={movie.runtime}
-            genres={movie.genres}
-            homepageURL={movie.homepage}
             overview={movie.overview}
+            averateVote={movie.vote_average}
           />
         ))}
       </div>

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { AuthWrapper } from "../../components/layout/AuthWrapper";
 import { Button } from "../../components/ui/Button";
-import { AUTH_API_URL } from "../../lib/constants/constants";
+import { AUTH_API_URL } from "../../lib/constants";
 import { useNavigate } from "react-router";
 
 const Login = () => {

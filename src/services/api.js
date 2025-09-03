@@ -2,7 +2,7 @@ import axiosInstance from "./axios";
 
 const API_URLS = {
   MOVIES: {
-    ALL: "/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc",
+    ALL: "/discover/movie?include_adult=false&include_video=false&language=en-US&sort_by=popularity.desc",
     POPULAR: "/movie/popular",
     TOP_RATED: "/movie/top_rated",
     UPCOMING: "/movie/upcoming",
@@ -10,7 +10,7 @@ const API_URLS = {
     SIMILAR: "/movie/movie_id/similar?language=en-US",
   },
   TV: {
-    ALL: "/discover/tv?include_adult=false&include_null_first_air_dates=false&language=en-US&page=1&sort_by=popularity.desc",
+    ALL: "/discover/tv?include_adult=false&include_null_first_air_dates=false&language=en-US&sort_by=popularity.desc",
   },
 };
 
@@ -41,6 +41,13 @@ export const MoviesAPI = {
   },
   getUpcoming: async () => {
     const response = await axiosInstance.get(API_URLS.MOVIES.UPCOMING);
+    return response.data;
+  },
+};
+
+export const TvAPI = {
+  getAll: async () => {
+    const response = await axiosInstance.get(API_URLS.TV.ALL);
     return response.data;
   },
 };
