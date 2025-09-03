@@ -1,12 +1,13 @@
-import React from "react";
-import { Card } from "../../components/layout/Card";
+import { CTA } from "../../components/layout/CTA";
+import { Hero } from "../../components/layout/Hero";
+import { getUser } from "../../lib/utils/getUser";
 
 const Home = () => {
+  const user = getUser();
   return (
-    <div className="p-4 mt-24">
-      <h1>Home Page</h1>
-      <p>Welcome to the home page!</p>
-      
+    <div className="mt-[74px]">
+      <Hero />
+      {!user && <CTA />}
     </div>
   );
 };
