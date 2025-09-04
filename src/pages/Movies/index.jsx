@@ -13,7 +13,10 @@ const Movies = () => {
   return (
     <div className="my-[74px] px-4 sm:px-6 md:px-8">
       <div className="flex gap-5 flex-wrap justify-center items-center">
-        {movies.map((movie, index) => (
+        {movies
+        .filter((movie)=>movie.poster_path)
+        .filter((movie)=>movie.title !== "Together")
+        .map((movie, index) => (
           <PosterCard
             key={index}
             title={movie.title}
