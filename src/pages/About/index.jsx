@@ -9,67 +9,76 @@ const TEAM_MEMBERS = [
     name: "Alex Johnson",
     role: "Founder & CEO",
     bio: "Film enthusiast with over 15 years of experience in digital media and content curation.",
-    image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+    image:
+      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
   },
   {
     name: "Sophia Chen",
     role: "Head of Content",
     bio: "Former film critic with a passion for discovering hidden cinematic gems from around the world.",
-    image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+    image:
+      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
   },
   {
     name: "Marcus Rivera",
     role: "Lead Developer",
     bio: "Tech wizard who believes in creating seamless digital experiences for movie lovers everywhere.",
-    image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+    image:
+      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
   },
   {
     name: "Olivia Taylor",
     role: "UX Designer",
     bio: "Combines her love for film aesthetics with user-centered design principles to create intuitive interfaces.",
-    image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
-  }
+    image:
+      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+  },
 ];
 
 // Features data
 const FEATURES = [
   {
     title: "Curated Collections",
-    description: "Discover handpicked movie collections based on themes, directors, and genres.",
-    icon: "🎬"
+    description:
+      "Discover handpicked movie collections based on themes, directors, and genres.",
+    icon: "🎬",
   },
   {
     title: "Personalized Recommendations",
-    description: "Get movie suggestions tailored to your viewing history and preferences.",
-    icon: "🎯"
+    description:
+      "Get movie suggestions tailored to your viewing history and preferences.",
+    icon: "🎯",
   },
   {
     title: "Comprehensive Database",
-    description: "Access information on thousands of films from classic cinema to the latest releases.",
-    icon: "📚"
+    description:
+      "Access information on thousands of films from classic cinema to the latest releases.",
+    icon: "📚",
   },
   {
     title: "Community Reviews",
-    description: "Share your thoughts and read reviews from fellow cinephiles around the world.",
-    icon: "💬"
+    description:
+      "Share your thoughts and read reviews from fellow cinephiles around the world.",
+    icon: "💬",
   },
   {
     title: "Watchlist Management",
-    description: "Create and organize your personal watchlist for future viewing sessions.",
-    icon: "📋"
+    description:
+      "Create and organize your personal watchlist for future viewing sessions.",
+    icon: "📋",
   },
   {
     title: "Cross-Platform Experience",
     description: "Enjoy Cinephilogy on any device, anytime, anywhere.",
-    icon: "📱"
-  }
+    icon: "📱",
+  },
 ];
 
 const About = () => {
   const [hoveredMember, setHoveredMember] = useState(null);
 
   return (
-    <div className="mt-[74px] bg-white text-black min-h-screen">
+    <div className="my-[74px] bg-white text-black min-h-screen">
       {/* Hero Section */}
       <div className="relative w-full h-[50vh] overflow-hidden">
         <div className="absolute inset-0">
@@ -99,13 +108,22 @@ const About = () => {
       <section className="py-16 px-8 bg-white">
         <div className="container mx-auto max-w-4xl">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-6 uppercase tracking-tight">Our Mission</h2>
+            <h2 className="text-3xl font-bold mb-6 uppercase tracking-tight">
+              Our Mission
+            </h2>
             <div className="w-24 h-1 bg-black mx-auto mb-8"></div>
             <p className="text-lg text-gray-700 leading-relaxed mb-8">
-              At Cinephilogy, we believe that cinema is more than entertainment—it's an art form that connects us across cultures and generations. Our mission is to create a platform where film enthusiasts can discover, discuss, and celebrate the magic of movies.
+              At Cinephilogy, we believe that cinema is more than
+              entertainment—it's an art form that connects us across cultures
+              and generations. Our mission is to create a platform where film
+              enthusiasts can discover, discuss, and celebrate the magic of
+              movies.
             </p>
             <p className="text-lg text-gray-700 leading-relaxed">
-              We're dedicated to fostering a community that appreciates both mainstream blockbusters and independent gems, providing tools and resources for cinephiles to deepen their appreciation of film as an art form and cultural touchstone.
+              We're dedicated to fostering a community that appreciates both
+              mainstream blockbusters and independent gems, providing tools and
+              resources for cinephiles to deepen their appreciation of film as
+              an art form and cultural touchstone.
             </p>
           </div>
         </div>
@@ -115,30 +133,35 @@ const About = () => {
       <section className="py-16 px-8 bg-gray-100">
         <div className="container mx-auto max-w-6xl">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-6 uppercase tracking-tight">Meet Our Team</h2>
+            <h2 className="text-3xl font-bold mb-6 uppercase tracking-tight">
+              Meet Our Team
+            </h2>
             <div className="w-24 h-1 bg-black mx-auto mb-8"></div>
             <p className="text-lg text-gray-700 max-w-3xl mx-auto">
-              The passionate individuals behind Cinephilogy who share a common love for cinema and technology.
+              The passionate individuals behind Cinephilogy who share a common
+              love for cinema and technology.
             </p>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {TEAM_MEMBERS.map((member, index) => (
-              <div 
-                key={index} 
+              <div
+                key={index}
                 className="bg-white rounded-lg overflow-hidden shadow-lg transition-all duration-300 hover:shadow-xl"
                 onMouseEnter={() => setHoveredMember(index)}
                 onMouseLeave={() => setHoveredMember(null)}
               >
                 <div className="h-64 overflow-hidden relative">
-                  <img 
-                    src={member.image} 
-                    alt={member.name} 
+                  <img
+                    src={member.image}
+                    alt={member.name}
                     className="w-full h-full object-cover object-center transition-transform duration-500 hover:scale-110"
                   />
                   {hoveredMember === index && (
                     <div className="absolute inset-0 bg-black/60 flex items-center justify-center p-6 transition-opacity duration-300">
-                      <p className="text-white text-center font-light">{member.bio}</p>
+                      <p className="text-white text-center font-light">
+                        {member.bio}
+                      </p>
                     </div>
                   )}
                 </div>
@@ -156,19 +179,27 @@ const About = () => {
       <section className="py-16 px-8 bg-white">
         <div className="container mx-auto max-w-6xl">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-6 uppercase tracking-tight">Website Features</h2>
+            <h2 className="text-3xl font-bold mb-6 uppercase tracking-tight">
+              Website Features
+            </h2>
             <div className="w-24 h-1 bg-black mx-auto mb-8"></div>
             <p className="text-lg text-gray-700 max-w-3xl mx-auto">
-              Discover the tools and resources we've created to enhance your cinematic journey.
+              Discover the tools and resources we've created to enhance your
+              cinematic journey.
             </p>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {FEATURES.map((feature, index) => (
-              <div key={index} className="bg-gray-100 p-8 rounded-lg transition-all duration-300 hover:shadow-md">
+              <div
+                key={index}
+                className="bg-gray-100 p-8 rounded-lg transition-all duration-300 hover:shadow-md"
+              >
                 <div className="text-4xl mb-4">{feature.icon}</div>
                 <h3 className="text-xl font-semibold mb-3">{feature.title}</h3>
-                <p className="text-gray-700 font-light">{feature.description}</p>
+                <p className="text-gray-700 font-light">
+                  {feature.description}
+                </p>
               </div>
             ))}
           </div>

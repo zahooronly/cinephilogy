@@ -11,7 +11,7 @@ const Movies = () => {
       .catch((err) => console.log("Error: ", err));
   }, []);
   return (
-    <div className="mt-[74px] px-4 sm:px-6 md:px-8">
+    <div className="my-[74px] px-4 sm:px-6 md:px-8">
       <div className="flex gap-5 flex-wrap justify-center items-center">
         {movies.map((movie, index) => (
           <PosterCard

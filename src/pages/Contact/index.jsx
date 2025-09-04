@@ -51,7 +51,7 @@ const Contact = () => {
   };
 
   return (
-    <div className="mt-[74px] bg-white text-black min-h-screen">
+    <div className="my-[74px] bg-white text-black min-h-screen">
       {/* Hero Section */}
       <div className="relative w-full h-[40vh] overflow-hidden">
         <div className="absolute inset-0">
