@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Tag } from "../../components/ui/Tag";
-import { CTAButton } from "../../components/ui/CTAButton";
-import { CTA } from "../../components/layout/CTA";
+import { CallToActionButton } from "../../components/ui/CallToActionButton";
+import { CallToAction } from "../../components/layout/CallToAction";
 
 // Team member data
 const TEAM_MEMBERS = [
@@ -216,7 +216,7 @@ const About = () => {
           <CTAButton>Get Started</CTAButton>
         </div>
       </section> */}
-      <CTA />
+      <CallToAction />
     </div>
   );
 };

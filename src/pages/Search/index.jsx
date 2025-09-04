@@ -2,7 +2,7 @@ import { useState } from "react";
 import { PosterCard } from "../../components/layout/PosterCard";
 import { MoviesAPI } from "../../services/api";
 import { Button } from "../../components/ui/Button";
-import { CTAButton } from "../../components/ui/CTAButton";
+import { CallToActionButton } from "../../components/ui/CallToActionButton";
 import { IMAGES_BASE_URL } from "../../lib/constants";
 
 const Search = () => {
@@ -42,7 +42,9 @@ const Search = () => {
             />
 
             <div className="absolute cursor-pointer right-4 top-1/2 -translate-y-1/2">
-              <CTAButton onClick={handleSearch}>Search</CTAButton>
+              <CallToActionButton onClick={handleSearch}>
+                Search
+              </CallToActionButton>
             </div>
           </form>
         </div>

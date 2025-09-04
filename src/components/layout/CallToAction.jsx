@@ -1,7 +1,7 @@
 import { Link } from "react-router";
-import { CTAButton } from "../ui/CTAButton";
+import { CallToActionButton } from "../ui/CallToActionButton";
 
-export const CTA = () => {
+export const CallToAction = () => {
   return (
     <div className="relative w-full h-[30vh] overflow-hidden">
       <div className="">
@@ -19,7 +19,7 @@ export const CTA = () => {
           Watch movies, series, and more.
         </p>
         <Link to="/login">
-          <CTAButton>Get Started</CTAButton>
+          <CallToActionButton>Get Started</CallToActionButton>
         </Link>
       </div>
     </div>
