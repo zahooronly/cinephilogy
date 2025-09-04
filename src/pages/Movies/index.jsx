@@ -6,8 +6,11 @@ import { IMAGES_BASE_URL } from "../../lib/constants";
 const Movies = () => {
   const [movies, setMovies] = useState([]);
   useEffect(() => {
-    MoviesAPI.getAll().then((data) => setMovies(data.results));
-  }, []);
+    MoviesAPI.getAll()
+      .then((data) => setMovies(data.data.results))
+      .then(() => console.log(movies))
+      .catch((err) => console.log("Error: ", err));
+  }, [movies]);
   return (
     <div className="mt-[74px]">
       <div className="flex flex-wrap justify-center items-center gap-5">

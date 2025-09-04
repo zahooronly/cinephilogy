@@ -7,7 +7,7 @@ const TV = () => {
   const [tvShows, setTvShows] = useState([]);
   useEffect(() => {
     TvAPI.getAll().then((data) => setTvShows(data.results));
-  }, []);
+  },[]);
   return (
     <div className="mt-[74px]">
       <div className="flex flex-wrap justify-center items-center gap-5">

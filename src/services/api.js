@@ -19,7 +19,7 @@ const API_URLS = {
 export const MoviesAPI = {
   getAll: async () => {
     const response = await axiosInstance.get(API_URLS.MOVIES.ALL);
-    return response.data;
+    return response;
   },
   getMovieDetail: async (id) => {
     const response = await axiosInstance.get(
