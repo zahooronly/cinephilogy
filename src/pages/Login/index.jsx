@@ -12,7 +12,7 @@ const Login = () => {
   const user = getUser();
 
   useEffect(() => {
-    if (user) navigate("/");
+    if (user) navigate("/", { replace: true });
   }, [user, navigate]);
 
   const [formData, setFormData] = useState({
@@ -25,8 +25,8 @@ const Login = () => {
   const loginHandler = (e) => {
     e.preventDefault();
     try {
-      AuthAPI.login(formData).then((data) => {
-        localStorage.setItem("token", data.access);
+      AuthAPI.login(formData).then((response) => {
+        localStorage.setItem("token", response.data.access);
         navigate("/");
       });
       setFormData({
@@ -76,11 +76,7 @@ const Login = () => {
                 className="absolute cursor-pointer right-2 top-1/2 -translate-y-1/2"
                 onClick={() => setShowPassword(!showPassword)}
               >
-                {showPassword ? (
-                  <OpenEyeIcon />
-                ) : (
-                  <CloseEyeIcon />
-                )}
+                {showPassword ? <OpenEyeIcon /> : <CloseEyeIcon />}
               </button>
             </div>
           </div>

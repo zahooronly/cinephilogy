@@ -25,38 +25,38 @@ export const MoviesAPI = {
     const response = await axiosInstance.get(
       API_URLS.MOVIES.DETAILS.replace("movie_id", id)
     );
-    return response.data;
+    return response;
   },
   getSimilar: async (id) => {
     const response = await axiosInstance.get(
       API_URLS.MOVIES.SIMILAR.replace("movie_id", id)
     );
-    return response.data;
+    return response;
   },
   getPopular: async () => {
     const response = await axiosInstance.get(API_URLS.MOVIES.POPULAR);
-    return response.data;
+    return response;
   },
   getTopRated: async () => {
     const response = await axiosInstance.get(API_URLS.MOVIES.TOP_RATED);
-    return response.data;
+    return response;
   },
   getUpcoming: async () => {
     const response = await axiosInstance.get(API_URLS.MOVIES.UPCOMING);
-    return response.data;
+    return response;
   },
 };
 
 export const TvAPI = {
   getAll: async () => {
     const response = await axiosInstance.get(API_URLS.TV.ALL);
-    return response.data;
+    return response;
   },
 };
 
 export const AuthAPI = {
   login: async (data) => {
     const response = await axios.post(`${AUTH_API_URL}/users/login/`, data);
-    return response.data;
+    return response;
   },
 };
