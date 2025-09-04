@@ -2,20 +2,6 @@ import axios from "axios";
 import axiosInstance from "./axios";
 import { AUTH_API_URL } from "../lib/constants";
 
-const API_URLS = {
-  MOVIES: {
-    ALL: "/discover/movie?include_adult=false&include_video=false&language=en-US&sort_by=popularity.desc",
-    POPULAR: "/movie/popular",
-    TOP_RATED: "/movie/top_rated",
-    UPCOMING: "/movie/upcoming",
-    DETAILS: "/movie/movie_id",
-    SIMILAR: "/movie/movie_id/similar?language=en-US",
-    SEARCH: "/search/movie?include_adult=false&language=en-US",
-  },
-  TV: {
-    ALL: "/discover/tv?include_adult=false&include_null_first_air_dates=false&language=en-US&sort_by=popularity.desc",
-  },
-};
 
 export const MoviesAPI = {
   getAll: async (pagination) => {

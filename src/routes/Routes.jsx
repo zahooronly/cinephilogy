@@ -11,6 +11,7 @@ import { getUser } from "../lib/utils/getUser";
 import { ProtectedRoutes } from "../components/layout/ProtectedRoutes";
 import { AuthRoutes } from "../components/layout/AuthRoutes";
 import Search from "../pages/Search";
+import MoviesDetail from "../pages/Movies/Detail";
 
 export const CustomRoutes = () => {
   const user = getUser();
@@ -26,6 +27,7 @@ export const CustomRoutes = () => {
       >
         <Route index element={<Home />} />
         <Route path="movies" element={<Movies />} />
+        <Route path="movies/:id" element={<MoviesDetail />} />
         <Route path="tv" element={<TV />} />
         <Route path="favourite" element={<Favourite />} />
         <Route path="about" element={<About />} />
