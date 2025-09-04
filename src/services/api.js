@@ -18,14 +18,14 @@ const API_URLS = {
 };
 
 export const MoviesAPI = {
-  getAll: async () => {
-    const response = await axiosInstance.get(API_URLS.MOVIES.ALL);
+  getAll: async (pagination) => {
+    const response = await axiosInstance.get(
+      `/discover/movie?include_adult=false&include_video=false&language=en-US&sort_by=popularity.desc&page=${pagination}`
+    );
     return response;
   },
   getMovieDetail: async (id) => {
-    const response = await axiosInstance.get(
-      API_URLS.MOVIES.DETAILS.replace("movie_id", id)
-    );
+    const response = await axiosInstance.get(`/movie/${id}?language=en-US`);
     return response;
   },
   getSearchedMovies: async (query) => {
@@ -36,27 +36,29 @@ export const MoviesAPI = {
   },
   getSimilar: async (id) => {
     const response = await axiosInstance.get(
-      API_URLS.MOVIES.SIMILAR.replace("movie_id", id)
+      `/movie/${id}/similar?language=en-US`
     );
     return response;
   },
   getPopular: async () => {
-    const response = await axiosInstance.get(API_URLS.MOVIES.POPULAR);
+    const response = await axiosInstance.get("/movie/popular");
     return response;
   },
   getTopRated: async () => {
-    const response = await axiosInstance.get(API_URLS.MOVIES.TOP_RATED);
+    const response = await axiosInstance.get("/movie/top_rated");
     return response;
   },
   getUpcoming: async () => {
-    const response = await axiosInstance.get(API_URLS.MOVIES.UPCOMING);
+    const response = await axiosInstance.get("/movie/upcoming");
     return response;
   },
 };
 
 export const TvAPI = {
-  getAll: async () => {
-    const response = await axiosInstance.get(API_URLS.TV.ALL);
+  getAll: async (pagination) => {
+    const response = await axiosInstance.get(
+      `/discover/tv?include_adult=false&include_null_first_air_dates=false&language=en-US&sort_by=popularity.desc&page=${pagination}`
+    );
     return response;
   },
 };

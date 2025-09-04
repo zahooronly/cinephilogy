@@ -3,6 +3,7 @@ import { PosterCard } from "../../components/layout/PosterCard";
 import { MoviesAPI } from "../../services/api";
 import { Button } from "../../components/ui/Button";
 import { CTAButton } from "../../components/ui/CTAButton";
+import { IMAGES_BASE_URL } from "../../lib/constants";
 
 const Search = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -58,7 +59,7 @@ const Search = () => {
                 <PosterCard
                   key={movie.id}
                   title={movie.title}
-                  imageUrl={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                  imageUrl={`${IMAGES_BASE_URL}${movie.poster_path}`}
                   year={movie.release_date?.split("-")[0]}
                   type="Movie"
                   overview={movie.overview}

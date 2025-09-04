@@ -1,5 +1,6 @@
 import { useState } from "react";
 import StarIcon from "../../assets/svgs/star.svg?react";
+import BookmarkIcon from "../../assets/svgs/bookmark.svg?react";
 import { Tag } from "../ui/Tag";
 import { Link } from "react-router";
 
@@ -7,7 +8,6 @@ export const PosterCard = ({
   title,
   imageUrl,
   year,
-  type,
   overview = "",
   voteCount = 0,
   averateVote,
@@ -20,6 +20,11 @@ export const PosterCard = ({
     const hours = Math.floor(minutes / 60);
     const mins = minutes % 60;
     return `${hours}h ${mins}m`;
+  };
+
+  const handleFavoriteClick = (e) => {
+    e.stopPropagation();
+    console.log("Favorite functionality to be implemented");
   };
 
   return (
@@ -58,8 +63,12 @@ export const PosterCard = ({
 
         {isHovered && (
           <div className="absolute rounded-xl inset-0 bg-gradient-to-t from-black via-black/90 to-black/70 flex flex-col justify-between p-3 sm:p-4 md:p-5 lg:p-6 transition-all duration-300">
-            <div className="text-white">
-              <Tag title={type} />
+            {/* Heart icon for favorites */}
+            <div
+              className="p-1.5 bg-white/70 max-w-8 w-full rounded-full backdrop-blur-sm cursor-pointer hover:bg-white/90 transition-colors duration-200"
+              onClick={handleFavoriteClick}
+            >
+              <BookmarkIcon className="w-4 h-4 sm:w-5 sm:h-5" />
             </div>
 
             <div>
