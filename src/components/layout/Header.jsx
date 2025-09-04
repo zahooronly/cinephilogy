@@ -22,8 +22,7 @@ export const Header = () => {
           Cine.
         </div>
       </Link>
-
-      {/* Hamburger menu for mobile */}
+      
       <div className="md:hidden">
         <button
           onClick={toggleMenu}
@@ -47,8 +46,7 @@ export const Header = () => {
           ></span>
         </button>
       </div>
-
-      {/* Desktop Navigation */}
+      
       <div className="hidden md:block flex-1 mx-12">
         <ul className="flex justify-center space-x-8">
           {NAVIVATION_LINKS.map((genre) => (
@@ -63,17 +61,10 @@ export const Header = () => {
           ))}
         </ul>
       </div>
-
-      {/* Desktop Search and Login */}
       <div className="hidden md:flex items-center space-x-6">
-        <div className="search relative">
-          <input
-            type="text"
-            placeholder="Search movies..."
-            className="bg-white font-thin text-zinc-900 px-4 py-2 w-64 focus:outline-none focus:ring-2 focus:ring-black transition-all"
-          />
-          <SearchIcon className="w-5 h-5 absolute right-3 top-2.5 text-gray-800" />
-        </div>
+        <Link to="/search">
+          <SearchIcon className="w-5 h-5 text-gray-800" />
+        </Link>
 
         {!user ? (
           <Link to="/login">
@@ -83,8 +74,6 @@ export const Header = () => {
           <Button onClick={logout}>Logout</Button>
         )}
       </div>
-
-      {/* Mobile Menu */}
       {isMenuOpen && (
         <div className="md:hidden absolute top-full left-0 right-0 bg-white shadow-lg py-4 px-6 z-50">
           <ul className="flex flex-col space-y-4">
@@ -101,14 +90,9 @@ export const Header = () => {
             ))}
           </ul>
           <div className="mt-6 space-y-4">
-            <div className="search relative">
-              <input
-                type="text"
-                placeholder="Search movies..."
-                className="bg-white font-thin text-zinc-900 px-4 py-2 w-full focus:outline-none focus:ring-2 focus:ring-black transition-all"
-              />
-              <SearchIcon className="w-5 h-5 absolute right-3 top-2.5 text-gray-800" />
-            </div>
+            <Link to="/search">
+              <SearchIcon className="w-5 h-5 text-gray-800" />
+            </Link>
             <div className="pt-2">
               {!user ? (
                 <Link to="/login" className="block w-full">

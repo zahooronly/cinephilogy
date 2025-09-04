@@ -10,6 +10,7 @@ const API_URLS = {
     UPCOMING: "/movie/upcoming",
     DETAILS: "/movie/movie_id",
     SIMILAR: "/movie/movie_id/similar?language=en-US",
+    SEARCH: "/search/movie?include_adult=false&language=en-US",
   },
   TV: {
     ALL: "/discover/tv?include_adult=false&include_null_first_air_dates=false&language=en-US&sort_by=popularity.desc",
@@ -24,6 +25,12 @@ export const MoviesAPI = {
   getMovieDetail: async (id) => {
     const response = await axiosInstance.get(
       API_URLS.MOVIES.DETAILS.replace("movie_id", id)
+    );
+    return response;
+  },
+  getSearchedMovies: async (query) => {
+    const response = await axiosInstance.get(
+      `/search/movie?include_adult=false&language=en-US&query=${query}`
     );
     return response;
   },

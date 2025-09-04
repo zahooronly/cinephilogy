@@ -6,6 +6,7 @@ import { getUser } from "../../lib/utils/getUser";
 import { AuthAPI } from "../../services/api";
 import OpenEyeIcon from "../../assets/svgs/open-eye.svg?react";
 import CloseEyeIcon from "../../assets/svgs/close-eye.svg?react";
+import { TOKEN } from "../../lib/constants";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -25,8 +26,8 @@ const Login = () => {
   const loginHandler = (e) => {
     e.preventDefault();
     try {
-      AuthAPI.login(formData).then((response) => {
-        localStorage.setItem("token", response.data.access);
+      AuthAPI.login(formData).then(() => {
+        localStorage.setItem("token", TOKEN);
         navigate("/");
       });
       setFormData({

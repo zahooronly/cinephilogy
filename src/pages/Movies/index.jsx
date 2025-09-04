@@ -8,12 +8,11 @@ const Movies = () => {
   useEffect(() => {
     MoviesAPI.getAll()
       .then((response) => setMovies(response.data.results))
-      .then(() => console.log(movies))
       .catch((err) => console.log("Error: ", err));
-  }, [movies]);
+  }, []);
   return (
     <div className="mt-[74px] px-4 sm:px-6 md:px-8">
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-5">
+      <div className="flex gap-5 flex-wrap justify-center items-center">
         {movies.map((movie, index) => (
           <PosterCard
             key={index}

@@ -10,6 +10,7 @@ import App from "../App";
 import { getUser } from "../lib/utils/getUser";
 import { ProtectedRoutes } from "../components/layout/ProtectedRoutes";
 import { AuthRoutes } from "../components/layout/AuthRoutes";
+import Search from "../pages/Search";
 
 export const CustomRoutes = () => {
   const user = getUser();
@@ -29,6 +30,7 @@ export const CustomRoutes = () => {
         <Route path="favourite" element={<Favourite />} />
         <Route path="about" element={<About />} />
         <Route path="contact" element={<Contact />} />
+        <Route path="search" element={<Search />} />
       </Route>
       <Route
         path="/login"

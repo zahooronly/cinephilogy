@@ -8,12 +8,11 @@ const TV = () => {
   useEffect(() => {
     TvAPI.getAll()
       .then((response) => setTvShows(response.data.results))
-      .then((data) => console.log(data))
       .catch((err) => console.log("Error: ", err));
-  }, [tvShows]);
+  }, []);
   return (
     <div className="mt-[74px] px-4 sm:px-6 md:px-8">
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-5">
+      <div className="flex gap-5 flex-wrap justify-center items-center">
         {tvShows.map((tvShow, index) => (
           <PosterCard
             key={index}
