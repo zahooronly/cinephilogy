@@ -16,6 +16,7 @@ import { formatDate } from "../../../lib/utils/formateDate";
 import { getStarRating } from "../../../lib/utils/getStarRating";
 import { formatRuntime } from "../../../lib/utils/formateRuntime";
 import { MovieButton } from "../../../components/ui/MovieButton";
+import { Tag } from "../../../components/ui/Tag";
 
 const MoviesDetail = () => {
   const { id } = useParams();
@@ -74,7 +75,7 @@ const MoviesDetail = () => {
 
             <div className="flex-1 max-w-3xl text-center lg:text-left">
               {movie.tagline && (
-                <p className="text-red-400 text-lg font-medium mb-4 italic">
+                <p className="text-white/80 text-lg font-medium mb-4 italic">
                   "{movie.tagline}"
                 </p>
               )}
@@ -85,12 +86,7 @@ const MoviesDetail = () => {
 
               <div className="flex flex-wrap justify-center lg:justify-start gap-3 mb-6">
                 {movie.genres?.map((genre) => (
-                  <span
-                    key={genre.id}
-                    className="px-4 py-2 bg-red-600/20 border border-red-500/30 rounded-full text-red-300 text-sm font-medium backdrop-blur-sm"
-                  >
-                    {genre.name}
-                  </span>
+                  <Tag key={genre.id} title={genre.name} />
                 ))}
               </div>
 
