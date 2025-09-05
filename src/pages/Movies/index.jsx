@@ -9,9 +9,16 @@ const Movies = () => {
   const [movies, setMovies] = useState([]);
   const [page, setPage] = useState(1);
   useEffect(() => {
-    MoviesAPI.getAll(page)
-      .then((response) => setMovies(response.data.results))
-      .catch((err) => console.log("Error: ", err));
+    const fetchMovies = async () => {
+      try {
+        const response = await MoviesAPI.getAll(page);
+        setMovies(response.data.results);
+      } catch (err) {
+        console.log("Error: ", err);
+      }
+    };
+
+    fetchMovies();
   }, [page]);
   return (
     <div className="my-[74px] px-4 sm:px-6 md:px-8">

@@ -24,16 +24,18 @@ const MoviesDetail = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    setIsLoading(true);
-    MoviesAPI.getMovieDetail(Number(id))
-      .then((res) => {
+    const fetchMovieDetail = async () => {
+      setIsLoading(true);
+      try {
+        const res = await MoviesAPI.getMovieDetail(Number(id));
         setMovie(res.data);
         setIsLoading(false);
-      })
-      .catch((err) => {
+      } catch (err) {
         console.log(err);
         setIsLoading(false);
-      });
+      }
+    };
+    fetchMovieDetail();
   }, [id]);
 
   if (isLoading) {
