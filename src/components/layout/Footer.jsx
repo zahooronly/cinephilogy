@@ -1,5 +1,9 @@
 import { Link } from "react-router";
-import { GENRES, LEGAL, NAVIVATION_LINKS } from "../../lib/constants/routesConstants";
+import {
+  GENRES,
+  LEGAL,
+  NAVIVATION_LINKS,
+} from "../../lib/constants/routesConstants";
 import FacebookIcon from "../../assets/svgs/facebook.svg?react";
 import InstagramIcon from "../../assets/svgs/instagram.svg?react";
 import TwitterIcon from "../../assets/svgs/twitter.svg?react";
@@ -11,7 +15,6 @@ export const Footer = () => {
   return (
     <footer className="bg-black text-white pt-12 pb-6">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Logo and social section - stacked on mobile, side by side on larger screens */}
         <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-8">
           <div className="mb-6 sm:mb-0">
             <Link to="/">
@@ -57,7 +60,6 @@ export const Footer = () => {
           </div>
         </div>
 
-        {/* Navigation links - improved grid for better mobile layout */}
         <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 mb-8">
           <div>
             <h3 className="text-lg font-semibold mb-3">Navigation</h3>

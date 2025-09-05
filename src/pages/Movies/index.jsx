@@ -4,6 +4,7 @@ import { MoviesAPI } from "../../services/api";
 import { IMAGES_BASE_URL } from "../../lib/constants";
 import { Link } from "react-router";
 import { Pagination } from "../../components/layout/Pagination";
+import SearchIcon from "../../assets/svgs/search.svg?react"
 
 const Movies = () => {
   const [movies, setMovies] = useState([]);
@@ -32,16 +33,17 @@ const Movies = () => {
 
   return (
     <div className="my-[74px] px-4 sm:px-6 md:px-8">
-      <div className="flex justify-end items-center my-4">
+      <div className="flex justify-end items-center my-4 relative">
         <input
           type="text"
           placeholder="Search for a movie"
           value={searchQuery}
           onChange={handleSearchQuery}
-          className="px-4 py-2 border border-gray-700 focus:border-black hover:border-gray-900 transition-colors duration-200 
+          className="px-4 py-2 border border-gray-700 w-md focus:border-black hover:border-gray-900 transition-colors duration-200 
           bg-white text-gray-900 placeholder-gray-500
           focus:outline-none focus:ring-2 focus:ring-gray-800"
         />
+          <SearchIcon className="absolute w-5 h-5 right-2"/>
       </div>
       <div className="flex gap-5 flex-wrap justify-center items-center">
         {movies.length !==0 ? (
