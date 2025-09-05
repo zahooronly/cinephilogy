@@ -3,8 +3,7 @@ import { Link, NavLink } from "react-router";
 import { Button } from "../ui/Button";
 import { useLogout } from "../../hooks/useLogout";
 import { getUser } from "../../lib/utils/getUser";
-import SearchIcon from "../../assets/svgs/search.svg?react";
-import { NAVIVATION_LINKS } from "../../routes/routes";
+import { NAVIVATION_LINKS } from "../../lib/constants/routesConstants";
 
 export const Header = () => {
   const logout = useLogout();
@@ -22,7 +21,7 @@ export const Header = () => {
           Cine.
         </div>
       </Link>
-      
+
       <div className="md:hidden">
         <button
           onClick={toggleMenu}
@@ -46,7 +45,7 @@ export const Header = () => {
           ></span>
         </button>
       </div>
-      
+
       <div className="hidden md:block flex-1 mx-12">
         <ul className="flex justify-center space-x-8">
           {NAVIVATION_LINKS.map((genre) => (
@@ -62,10 +61,6 @@ export const Header = () => {
         </ul>
       </div>
       <div className="hidden md:flex items-center space-x-6">
-        <Link to="/search">
-          <SearchIcon className="w-5 h-5 text-gray-800" />
-        </Link>
-
         {!user ? (
           <Link to="/login">
             <Button>Login</Button>
@@ -90,9 +85,6 @@ export const Header = () => {
             ))}
           </ul>
           <div className="mt-6 space-y-4">
-            <Link to="/search">
-              <SearchIcon className="w-5 h-5 text-gray-800" />
-            </Link>
             <div className="pt-2">
               {!user ? (
                 <Link to="/login" className="block w-full">
