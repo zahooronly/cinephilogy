@@ -3,14 +3,16 @@ import { PosterCard } from "../../components/layout/PosterCard";
 import { MoviesAPI } from "../../services/api";
 import { IMAGES_BASE_URL } from "../../lib/constants";
 import { Link } from "react-router";
+import { Pagination } from "../../components/layout/Pagination";
 
 const Movies = () => {
   const [movies, setMovies] = useState([]);
+  const [page, setPage] = useState(1);
   useEffect(() => {
-    MoviesAPI.getAll()
+    MoviesAPI.getAll(page)
       .then((response) => setMovies(response.data.results))
       .catch((err) => console.log("Error: ", err));
-  }, []);
+  }, [page]);
   return (
     <div className="my-[74px] px-4 sm:px-6 md:px-8">
       <div className="flex gap-5 flex-wrap justify-center items-center">
@@ -32,7 +34,9 @@ const Movies = () => {
               />
             </Link>
           ))}
+        {/* pagination */}
       </div>
+      <Pagination page={page} setPage={setPage} />
     </div>
   );
 };
