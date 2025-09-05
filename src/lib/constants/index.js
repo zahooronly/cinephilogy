@@ -5,10 +5,7 @@ export const TOKEN = import.meta.env.VITE_ACCESS_TOKEN;
 export const NAVIVATION_LINKS = [
   { title: "Home", url: "/" },
   { title: "Movies", url: "/movies" },
-  { title: "TV", url: "/tv" },
   { title: "Favourite", url: "/favourite" },
-  { title: "About us", url: "/about" },
-  { title: "Contact us", url: "/contact" },
 ];
 
 export const GENRES = [
