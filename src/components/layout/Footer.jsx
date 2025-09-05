@@ -1,5 +1,5 @@
 import { Link } from "react-router";
-import { GENRES, LEGAL, NAVIVATION_LINKS } from "../../lib/constants";
+import { GENRES, LEGAL, NAVIVATION_LINKS } from "../../routes/routes";
 import FacebookIcon from "../../assets/svgs/facebook.svg?react";
 import InstagramIcon from "../../assets/svgs/instagram.svg?react";
 import TwitterIcon from "../../assets/svgs/twitter.svg?react";

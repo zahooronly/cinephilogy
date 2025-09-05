@@ -3,8 +3,8 @@ import { Link, NavLink } from "react-router";
 import { Button } from "../ui/Button";
 import { useLogout } from "../../hooks/useLogout";
 import { getUser } from "../../lib/utils/getUser";
-import { NAVIVATION_LINKS } from "../../lib/constants";
 import SearchIcon from "../../assets/svgs/search.svg?react";
+import { NAVIVATION_LINKS } from "../../routes/routes";
 
 export const Header = () => {
   const logout = useLogout();
