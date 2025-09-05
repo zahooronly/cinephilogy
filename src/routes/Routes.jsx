@@ -8,6 +8,7 @@ import Home from "../pages/Home";
 import Movies from "../pages/Movies";
 import Favourite from "../pages/Favourite";
 import NotFound from "../pages/404";
+import MoviesDetail from "../pages/Movies/Detail";
 
 export const CustomRoutes = () => {
   const user = getUser();
@@ -22,6 +23,7 @@ export const CustomRoutes = () => {
         <Route element={<ProtectedRoutes isAuthenticated={user} />}>
           <Route index element={<Home />} />
           <Route path="movies" element={<Movies />} />
+          <Route path="movies/:id" element={<MoviesDetail />} />
           <Route path="favourite" element={<Favourite />} />
         </Route>
       </Route>
