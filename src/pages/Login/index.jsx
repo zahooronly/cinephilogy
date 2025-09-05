@@ -23,13 +23,14 @@ const Login = () => {
 
   const [showPassword, setShowPassword] = useState(false);
 
-  const loginHandler = (e) => {
+  const loginHandler = async (e) => {
     e.preventDefault();
     try {
-      AuthAPI.login(formData).then(() => {
-        localStorage.setItem("token", TOKEN);
-        navigate("/");
-      });
+      await AuthAPI.login(formData);
+      localStorage.setItem("token", TOKEN);
+      window.location.reload();
+      navigate("/");
+
       setFormData({
         email: "",
         password: "",

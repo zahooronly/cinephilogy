@@ -1,47 +1,32 @@
-import { Route, Routes } from "react-router";
-import Home from "../pages/Home";
-import Movies from "../pages/Movies";
-import TV from "../pages/TV";
-import Favourite from "../pages/Favourite";
-import About from "../pages/About";
-import Contact from "../pages/Contact";
-import Login from "../pages/Login";
-import App from "../App";
+import { Routes, Route } from "react-router";
 import { getUser } from "../lib/utils/getUser";
 import { ProtectedRoutes } from "../components/layout/ProtectedRoutes";
 import { AuthRoutes } from "../components/layout/AuthRoutes";
-import Search from "../pages/Search";
-import MoviesDetail from "../pages/Movies/Detail";
+import Login from "../pages/Login";
+import App from "../App";
+import Home from "../pages/Home";
+import Movies from "../pages/Movies";
+import Favourite from "../pages/Favourite";
+import NotFound from "../pages/404";
 
 export const CustomRoutes = () => {
   const user = getUser();
+
   return (
     <Routes>
-      <Route
-        path="/"
-        element={
-          <ProtectedRoutes isAuthenticated={user}>
-            <App />
-          </ProtectedRoutes>
-        }
-      >
-        <Route index element={<Home />} />
-        <Route path="movies" element={<Movies />} />
-        <Route path="movies/:id" element={<MoviesDetail />} />
-        <Route path="tv" element={<TV />} />
-        <Route path="favourite" element={<Favourite />} />
-        <Route path="about" element={<About />} />
-        <Route path="contact" element={<Contact />} />
-        <Route path="search" element={<Search />} />
+      <Route element={<AuthRoutes isAuthenticated={user} />}>
+        <Route path="/login" element={<Login />} />
       </Route>
-      <Route
-        path="/login"
-        element={
-          <AuthRoutes isAuthenticated={user}>
-            <Login />
-          </AuthRoutes>
-        }
-      />
+
+      <Route path="/" element={<App />}>
+        <Route element={<ProtectedRoutes isAuthenticated={user} />}>
+          <Route index element={<Home />} />
+          <Route path="movies" element={<Movies />} />
+          <Route path="favourite" element={<Favourite />} />
+        </Route>
+      </Route>
+
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 };

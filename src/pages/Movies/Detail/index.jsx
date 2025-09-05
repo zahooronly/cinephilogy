@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { MoviesAPI } from "../../../services/api";
 
@@ -15,7 +15,7 @@ const MoviesDetail = () => {
       });
   });
 
-  return <div>MoviesDetail</div>;
+  return <div>Detail {movie.title}</div>;
 };
 
 export default MoviesDetail;
