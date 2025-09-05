@@ -22,8 +22,10 @@ export const CustomRoutes = () => {
       <Route path="/" element={<App />}>
         <Route element={<ProtectedRoutes isAuthenticated={user} />}>
           <Route index element={<Home />} />
-          <Route path="movies" element={<Movies />} />
-          <Route path="movies/:id" element={<MoviesDetail />} />
+          <Route path="movies">
+            <Route index element={<Movies />} />
+            <Route path=":id" element={<MoviesDetail />} />
+          </Route>
           <Route path="favourite" element={<Favourite />} />
         </Route>
       </Route>
