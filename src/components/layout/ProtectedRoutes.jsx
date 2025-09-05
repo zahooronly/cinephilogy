@@ -1,6 +1,8 @@
-import React from "react";
-import { Navigate } from "react-router";
+import { Navigate, Outlet } from "react-router";
 
-export const ProtectedRoutes = ({ children, isAuthenticated }) => {
-  return isAuthenticated ? children : <Navigate to="/login" replace={true} />;
+export const ProtectedRoutes = ({ isAuthenticated }) => {
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
+  }
+  return <Outlet />;
 };
