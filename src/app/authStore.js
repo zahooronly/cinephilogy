@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { persist, devtools } from "zustand/middleware";
+import { persist } from "zustand/middleware";
 
 const authStore = (set) => ({
   token: "",
@@ -11,5 +11,5 @@ const authStore = (set) => ({
   },
 });
 
-const useAuthStore = create(devtools(persist(authStore, { name: "token" })));
+const useAuthStore = create(persist(authStore, { name: "token" }));
 export default useAuthStore;

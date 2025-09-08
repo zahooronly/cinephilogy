@@ -1,6 +1,7 @@
 export const getUser = () => {
   const token = localStorage.getItem("token");
-  return Boolean(token);
+  if (token == "" || !token) return false;
+  return true;
 };
 
 export const getStarRating = (rating) => {
