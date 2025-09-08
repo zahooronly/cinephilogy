@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import { PosterCard } from "../../components/layout/PosterCard";
 import { MoviesAPI } from "../../services/api";
-import { IMAGES_BASE_URL } from "../../lib/constants";
-import { Link } from "react-router";
 import { Pagination } from "../../components/layout/Pagination";
 import SearchIcon from "../../assets/svgs/search.svg?react";
 import HeaderFooter from "../../components/layout/HeaderFooter";
@@ -23,7 +21,7 @@ const Movies = () => {
         const response = await MoviesAPI.getAll(page);
         setMovies(response.data.results);
       } catch (err) {
-        console.log("Error: ", err);
+        console.error("Error: ", err);
       }
     };
 
@@ -52,11 +50,7 @@ const Movies = () => {
             movies
               .filter((movie) => movie.poster_path)
               .filter((movie) => movie.title !== "Together")
-              .map((movie) => (
-                <Link to={`/movies/${movie.id}`} key={movie.id}>
-                  <PosterCard movie={movie} />
-                </Link>
-              ))
+              .map((movie) => <PosterCard key={movie.id} movie={movie} />)
           ) : (
             <div>
               <h1 className="text-3xl font-thin text-center text-black">

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { AuthWrapper } from "../../components/layout/AuthWrapper";
 import { Button } from "../../components/ui/Button";
 import { useNavigate } from "react-router";
-import { getUser } from "../../lib/utils/getUser";
+import { getUser } from "../../lib/utils";
 import { AuthAPI } from "../../services/api";
 import OpenEyeIcon from "../../assets/svgs/open-eye.svg?react";
 import CloseEyeIcon from "../../assets/svgs/close-eye.svg?react";

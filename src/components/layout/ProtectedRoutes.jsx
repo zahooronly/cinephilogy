@@ -1,5 +1,5 @@
 import { Navigate } from "react-router";
-import { getUser } from "../../lib/utils/getUser";
+import { getUser } from "../../lib/utils";
 
 export const ProtectedRoutes = ({ children }) => {
   const isAuthenticated = getUser();

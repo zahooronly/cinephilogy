@@ -12,24 +12,24 @@ import CalendarIcon from "../../../assets/svgs/calender.svg?react";
 import StarIcon from "../../../assets/svgs/star.svg?react";
 
 import { IMAGES_BASE_URL } from "../../../lib/constants";
-import { formatDate } from "../../../lib/utils/formateDate";
-import { getStarRating } from "../../../lib/utils/getStarRating";
-import { formatRuntime } from "../../../lib/utils/formateRuntime";
 import { MovieButton } from "../../../components/ui/MovieButton";
 import { Tag } from "../../../components/ui/Tag";
 import HeaderFooter from "../../../components/layout/HeaderFooter";
 import useFavouriteMoviesStore from "../../../app/favouriteMoviesStore";
+import { formatDate, formatRuntime, getStarRating } from "../../../lib/utils";
 
 const MoviesDetail = () => {
   const { id } = useParams();
   const [movie, setMovie] = useState({});
   const [isLoading, setIsLoading] = useState(true);
-  const { addFavourite,removeFavourite, favouriteMovies } = useFavouriteMoviesStore();
+  const { addFavourite, removeFavourite, favouriteMovies } =
+    useFavouriteMoviesStore();
 
-  const isFavourite = favouriteMovies.some((favMovie) => favMovie.id === movie.id);
+  const isFavourite = favouriteMovies.some(
+    (favMovie) => favMovie.id === movie.id
+  );
 
   const handleFavourite = (movie) => () => {
-    console.log("Pressed")
     if (isFavourite) {
       removeFavourite(movie.id);
     } else {
@@ -45,7 +45,7 @@ const MoviesDetail = () => {
         setMovie(res.data);
         setIsLoading(false);
       } catch (err) {
-        console.log(err);
+        console.error(err);
         setIsLoading(false);
       }
     };
@@ -125,7 +125,7 @@ const MoviesDetail = () => {
 
                   <div className="flex items-center space-x-2">
                     <ClockIcon className="w-5 h-5" />
-                    <span>{formatRuntime(movie.runtime)}</span>
+                    <span>{formatRuntime(movie?.runtime)}</span>
                   </div>
 
                   <div className="flex items-center space-x-2">
@@ -150,8 +150,14 @@ const MoviesDetail = () => {
                     onClick={handleFavourite(movie)}
                     className="flex items-center space-x-3 backdrop-blur-sm border px-6 py-4 rounded-xl font-semibold transition-all duration-300 cursor-pointer bg-white/10 border-white/20 hover:bg-white/20"
                   >
-                    <HeartIcon className={`w-5 h-5 ${isFavourite ? 'text-red-500' : ''}`} />
-                    <span>{isFavourite ? 'Remove from Favorites' : 'Add to Favorites'}</span>
+                    <HeartIcon
+                      className={`w-5 h-5 ${isFavourite ? "text-red-500" : ""}`}
+                    />
+                    <span>
+                      {isFavourite
+                        ? "Remove from Favorites"
+                        : "Add to Favorites"}
+                    </span>
                   </button>
 
                   <MovieButton className="bg-white/10 border-white/20 hover:bg-white/20">
