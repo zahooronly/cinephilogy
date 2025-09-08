@@ -1,14 +1,13 @@
-import { CTA } from "../../components/layout/CTA";
-import { Hero } from "../../components/layout/Hero";
-import { getUser } from "../../lib/utils/getUser";
+import HeaderFooter from "../../components/layout/HeaderFooter";
+import { HeroSection } from "../../components/layout/HeroSection";
 
 const Home = () => {
-  const user = getUser();
   return (
-    <div className="mt-[74px]">
-      <Hero />
-      {!user && (<CTA />)}
-    </div>
+    <HeaderFooter>
+      <div className="mt-[74px]">
+        <HeroSection />
+      </div>
+    </HeaderFooter>
   );
 };
 
