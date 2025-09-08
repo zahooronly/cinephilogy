@@ -13,9 +13,10 @@ import { useForm } from "react-hook-form";
 
 const Login = () => {
   const { register, handleSubmit } = useForm();
-
+  
   const navigate = useNavigate();
   const user = useAuth();
+  
   const { addToken } = useAuthStore();
 
   useEffect(() => {

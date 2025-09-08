@@ -6,11 +6,12 @@ import { IMAGES_BASE_URL } from "../../lib/constants";
 import { formatRuntime } from "../../lib/utils";
 import { Link } from "react-router";
 
-export const PosterCard = ({ movie }) => {
+export const PosterCard = ({ key, movie }) => {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
     <div
+      key={movie?.id}
       className="relative w-full sm:w-[170px] md:w-[250px] lg:w-[350px] h-[300px] sm:h-[350px] md:h-[400px] lg:h-[475px] transition-all duration-200 group"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}

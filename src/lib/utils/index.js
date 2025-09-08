@@ -6,6 +6,11 @@ export const useAuth = () => {
   return true;
 };
 
+export const useToken = () => {
+  const { token } = useAuthStore();
+  return token;
+};
+
 export const getStarRating = (rating) => {
   return (rating / 2).toFixed(1);
 };
