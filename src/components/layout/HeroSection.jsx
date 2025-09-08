@@ -1,8 +1,7 @@
-import { Button } from "../ui/Button";
 import { CallToActionButton } from "../ui/CallToActionButton";
 import { Tag } from "../ui/Tag";
 
-export const Hero = () => {
+export const HeroSection = () => {
   return (
     <div className="relative w-full h-[90vh] overflow-hidden">
       {/* Movie banner with overlay */}

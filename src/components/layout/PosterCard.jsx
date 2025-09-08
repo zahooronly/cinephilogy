@@ -3,14 +3,15 @@ import StarIcon from "../../assets/svgs/star.svg?react";
 import BookmarkIcon from "../../assets/svgs/bookmark.svg?react";
 import { Tag } from "../ui/Tag";
 import { IMAGES_BASE_URL } from "../../lib/constants";
-import { formatRuntime } from "../../lib/utils/formateRuntime";
+import { formatRuntime } from "../../lib/utils";
+import { Link } from "react-router";
 
 export const PosterCard = ({ movie }) => {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
     <div
-      className="relative w-full sm:w-[170px] md:w-[250px] lg:w-[350px] h-[300px] sm:h-[350px] md:h-[400px] lg:h-[475px] transition-all duration-200 cursor-pointer group"
+      className="relative w-full sm:w-[170px] md:w-[250px] lg:w-[350px] h-[300px] sm:h-[350px] md:h-[400px] lg:h-[475px] transition-all duration-200 group"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -33,7 +34,7 @@ export const PosterCard = ({ movie }) => {
           </h3>
           <div className="flex items-center gap-1 sm:gap-2 text-gray-300 text-xs font-medium">
             <span className="text-gray-400">{movie.release_date}</span>
-            {movie.runtime > 0 && (
+            {movie.runtime && (
               <>
                 <span className="text-gray-500">•</span>
                 <span className="text-gray-400">
@@ -52,9 +53,11 @@ export const PosterCard = ({ movie }) => {
             </div>
 
             <div>
-              <h3 className="text-white font-semibold text-lg sm:text-xl tracking-wide mb-1 sm:mb-2 font-sans">
-                {movie.title}
-              </h3>
+              <Link to={`/movies/${movie.id}`}>
+                <h3 className="text-white font-semibold text-lg sm:text-xl tracking-wide mb-1 sm:mb-2 font-sans">
+                  {movie.title}
+                </h3>
+              </Link>
 
               <div className="flex items-center flex-wrap gap-1 sm:gap-2 text-gray-200 text-xs sm:text-sm font-medium mb-1 sm:mb-2">
                 <span className="text-gray-300">{movie.release_date}</span>
