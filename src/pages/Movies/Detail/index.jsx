@@ -17,6 +17,7 @@ import { getStarRating } from "../../../lib/utils/getStarRating";
 import { formatRuntime } from "../../../lib/utils/formateRuntime";
 import { MovieButton } from "../../../components/ui/MovieButton";
 import { Tag } from "../../../components/ui/Tag";
+import HeaderFooter from "../../../components/layout/HeaderFooter";
 
 const MoviesDetail = () => {
   const { id } = useParams();
@@ -47,9 +48,12 @@ const MoviesDetail = () => {
   }
 
   return (
+    <HeaderFooter>
+
     <div className="min-h-screen bg-gray-900 text-white">
       <div className="relative h-screen overflow-hidden">
         <div
+    
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
             backgroundImage: `url(${`https://image.tmdb.org/t/p/original${movie.backdrop_path}`})`,
@@ -228,6 +232,7 @@ const MoviesDetail = () => {
         </div>
       </div>
     </div>
+    </HeaderFooter>
   );
 };
 

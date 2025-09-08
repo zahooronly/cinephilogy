@@ -1,10 +1,13 @@
+import HeaderFooter from "../../components/layout/HeaderFooter";
 import { Hero } from "../../components/layout/Hero";
 
 const Home = () => {
   return (
-    <div className="mt-[74px]">
-      <Hero />
-    </div>
+    <HeaderFooter>
+      <div className="mt-[74px]">
+        <Hero />
+      </div>
+    </HeaderFooter>
   );
 };
 

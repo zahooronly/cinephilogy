@@ -1,14 +1,11 @@
-import { Outlet } from "react-router";
-import { Header } from "./components/layout/Header";
-import { Footer } from "./components/layout/Footer";
+import { BrowserRouter } from "react-router";
+import { CustomRoutes } from "./routes/Routes";
 
 function App() {
   return (
-    <>
-      <Header />
-      <Outlet />
-      <Footer />
-    </>
+    <BrowserRouter>
+      <CustomRoutes />
+    </BrowserRouter>
   );
 }
 

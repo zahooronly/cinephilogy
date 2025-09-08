@@ -1,8 +1,8 @@
-import { Navigate, Outlet } from "react-router";
+import { Navigate } from "react-router";
 
-export const AuthRoutes = ({ isAuthenticated }) => {
-  if (isAuthenticated) {
-    return <Navigate to="/" replace />;
+export const AuthRoutes = ({ children, isAuthenticated }) => {
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
   }
-  return <Outlet />;
+  return children;
 };

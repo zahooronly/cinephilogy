@@ -1,36 +1,31 @@
 import { Routes, Route } from "react-router";
-import { getUser } from "../lib/utils/getUser";
+import { ROUTES_CONFIG } from "../lib/constants/routesConstants";
 import { ProtectedRoutes } from "../components/layout/ProtectedRoutes";
-import { AuthRoutes } from "../components/layout/AuthRoutes";
-import Login from "../pages/Login";
-import App from "../App";
-import Home from "../pages/Home";
-import Movies from "../pages/Movies";
-import Favourite from "../pages/Favourite";
-import NotFound from "../pages/404";
-import MoviesDetail from "../pages/Movies/Detail";
 
 export const CustomRoutes = () => {
-  const user = getUser();
+  const renderRoutes = (routes) =>
+    routes.map(({ path, element, children, isProtected, index }) => {
+      const wrappedElement = isProtected ? (
+        <ProtectedRoutes>{element}</ProtectedRoutes>
+      ) : (
+        element
+      );
 
-  return (
-    <Routes>
-      <Route element={<AuthRoutes isAuthenticated={user} />}>
-        <Route path="/login" element={<Login />} />
-      </Route>
+      const routeProps = {
+        ...(index ? { index: true } : { path }),
+        element: wrappedElement,
+      };
 
-      <Route path="/" element={<App />}>
-        <Route element={<ProtectedRoutes isAuthenticated={user} />}>
-          <Route index element={<Home />} />
-          <Route path="movies">
-            <Route index element={<Movies />} />
-            <Route path=":id" element={<MoviesDetail />} />
+      if (children && children.length > 0) {
+        return (
+          <Route key={path} {...routeProps}>
+            {renderRoutes(children)}
           </Route>
-          <Route path="favourite" element={<Favourite />} />
-        </Route>
-      </Route>
+        );
+      }
 
-      <Route path="*" element={<NotFound />} />
-    </Routes>
-  );
+      return <Route key={path} {...routeProps} />;
+    });
+
+  return <Routes>{renderRoutes(ROUTES_CONFIG)}</Routes>;
 };

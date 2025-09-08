@@ -1,13 +1,10 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./styles/globals.css";
-import { BrowserRouter } from "react-router";
-import { CustomRoutes } from "./routes/Routes";
+import App from "./App"
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <BrowserRouter>
-      <CustomRoutes />
-    </BrowserRouter>
+    <App />
   </StrictMode>
 );
