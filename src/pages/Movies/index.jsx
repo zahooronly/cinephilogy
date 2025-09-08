@@ -54,17 +54,7 @@ const Movies = () => {
               .filter((movie) => movie.title !== "Together")
               .map((movie) => (
                 <Link to={`/movies/${movie.id}`} key={movie.id}>
-                  <PosterCard
-                    key={movie.id}
-                    title={movie.title}
-                    imageUrl={`${IMAGES_BASE_URL}${movie.poster_path}`}
-                    year={movie.release_date}
-                    type="MOVIE"
-                    voteCount={movie.vote_count}
-                    runtime={movie.runtime}
-                    overview={movie.overview}
-                    averateVote={movie.vote_average}
-                  />
+                  <PosterCard movie={movie} />
                 </Link>
               ))
           ) : (

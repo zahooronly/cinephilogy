@@ -1,12 +1,20 @@
 import { useState } from "react";
 import StarIcon from "../../assets/svgs/star.svg?react";
-import BookmarkIcon from "../../assets/svgs/bookmark.svg?react";
+import TrashIcon from "../../assets/svgs/trash.svg?react";
 import { Tag } from "../ui/Tag";
-import { IMAGES_BASE_URL } from "../../lib/constants";
+import useFavouriteMoviesStore from "../../app/favouriteMoviesStore";
 import { formatRuntime } from "../../lib/utils/formateRuntime";
+import { IMAGES_BASE_URL } from "../../lib/constants";
 
-export const PosterCard = ({ movie }) => {
+export const FavouriteMovieCard = ({
+  movie,
+}) => {
   const [isHovered, setIsHovered] = useState(false);
+  const { removeFavourite } = useFavouriteMoviesStore();
+  const handleRemoveFavoriteClick = (e) => {
+    e.stopPropagation();
+    removeFavourite(movie.id);
+  };
 
   return (
     <div
@@ -36,9 +44,7 @@ export const PosterCard = ({ movie }) => {
             {movie.runtime > 0 && (
               <>
                 <span className="text-gray-500">•</span>
-                <span className="text-gray-400">
-                  {formatRuntime(movie.runtime)}
-                </span>
+                <span className="text-gray-400">{formatRuntime(movie.runtime)}</span>
               </>
             )}
           </div>
@@ -46,9 +52,11 @@ export const PosterCard = ({ movie }) => {
 
         {isHovered && (
           <div className="absolute rounded-xl inset-0 bg-gradient-to-t from-black via-black/90 to-black/70 flex flex-col justify-between p-3 sm:p-4 md:p-5 lg:p-6 transition-all duration-300">
-            {/* Heart icon for favorites */}
-            <div className="p-1.5 bg-white/70 max-w-8 w-full rounded-full backdrop-blur-sm cursor-pointer hover:bg-white/90 transition-colors duration-200">
-              <BookmarkIcon className="w-4 h-4 sm:w-5 sm:h-5" />
+            <div
+              className="p-1.5 bg-white/70 max-w-8 w-full rounded-full backdrop-blur-sm cursor-pointer hover:bg-white/90 transition-colors duration-200"
+              onClick={handleRemoveFavoriteClick}
+            >
+              <TrashIcon className="w-4 h-4 sm:w-5 sm:h-5" />
             </div>
 
             <div>
@@ -61,13 +69,13 @@ export const PosterCard = ({ movie }) => {
                 <span className="text-gray-500">•</span>
                 <span className="flex items-center text-yellow-400">
                   <StarIcon className="w-3 h-3 sm:w-4 sm:h-4 mr-1" />
-                  {movie.vote_average}
+                  {movie.average_vote}
                 </span>
                 {movie.runtime > 0 && (
                   <>
                     <span className="text-gray-500">•</span>
                     <span className="text-gray-300">
-                      {formatRuntime(movie.runtime)}
+                      {formatRuntime(movie.runtime)} min
                     </span>
                   </>
                 )}
