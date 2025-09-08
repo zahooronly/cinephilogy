@@ -8,10 +8,12 @@ import OpenEyeIcon from "../../assets/svgs/open-eye.svg?react";
 import CloseEyeIcon from "../../assets/svgs/close-eye.svg?react";
 import { TOKEN } from "../../lib/constants";
 import HeaderFooter from "../../components/layout/HeaderFooter";
+import useAuthStore from "../../app/authStore";
 
 const Login = () => {
   const navigate = useNavigate();
   const user = getUser();
+  const { addToken } = useAuthStore();
 
   useEffect(() => {
     if (user) navigate("/", { replace: true });
@@ -28,7 +30,7 @@ const Login = () => {
     e.preventDefault();
     try {
       await AuthAPI.login(formData);
-      localStorage.setItem("token", TOKEN);
+      addToken(TOKEN);
       navigate("/");
 
       setFormData({
