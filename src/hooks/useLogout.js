@@ -4,8 +4,9 @@ import useAuthStore from "../app/authStore";
 export const useLogout = () => {
   const navigate = useNavigate();
   const { removeToken } = useAuthStore();
+
   const logout = () => {
-    removeToken();
+    removeToken("token");
     navigate("/login", replace);
   };
   return logout;

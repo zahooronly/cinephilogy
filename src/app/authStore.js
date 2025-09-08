@@ -2,12 +2,12 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 const authStore = (set) => ({
-  token: "",
+  token: null,
   addToken: (tkn) => {
     set(() => ({ token: tkn }));
   },
   removeToken: () => {
-    set(() => ({ token: "" }));
+    set(() => ({ token: null }));
   },
 });
 

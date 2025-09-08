@@ -2,12 +2,12 @@ import { useState } from "react";
 import { Link, NavLink } from "react-router";
 import { Button } from "../ui/Button";
 import { useLogout } from "../../hooks/useLogout";
-import { getUser } from "../../lib/utils";
+import { useAuth } from "../../lib/utils";
 import { NAVIVATION_LINKS } from "../../lib/constants/routesConstants";
 
 export const Header = () => {
   const logout = useLogout();
-  const user = getUser();
+  const user = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => {

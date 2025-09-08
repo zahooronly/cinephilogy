@@ -1,6 +1,8 @@
-export const getUser = () => {
-  const token = localStorage.getItem("token");
-  if (token == "" || !token) return false;
+import useAuthStore from "../../app/authStore";
+
+export const useAuth = () => {
+  const { token } = useAuthStore();
+  if (!token) return false;
   return true;
 };
 
