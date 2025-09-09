@@ -42,21 +42,15 @@ const Login = () => {
     },
   ];
 
-  const { mutate, isError, error } = useMutation({
+  const { mutate } = useMutation({
     mutationFn: async (e) => await AuthAPI.login(e),
     onSuccess: () => {
       addToken(TOKEN);
       navigate("/");
     },
-    onError: isError ? console.error(error) : console.error("error"),
+    onError: (err) => console.error(err.message),
   });
-  const submitHandler = (e) => {
-    try {
-      mutate(e);
-    } catch (err) {
-      console.error("Error:", err);
-    }
-  };
+  const submitHandler = (e) => mutate(e);
 
   return (
     <HeaderFooter>
