@@ -17,6 +17,7 @@ import HeaderFooter from "../../../components/layout/HeaderFooter";
 import useFavouriteMoviesStore from "../../../app/favouriteMoviesStore";
 import { formatDate, formatRuntime, getStarRating } from "../../../lib/utils";
 import { useQuery } from "@tanstack/react-query";
+import { Loader } from "../../../components/ui/Loader";
 
 const MoviesDetail = () => {
   const { id } = useParams();
@@ -48,15 +49,8 @@ const MoviesDetail = () => {
   };
 
   if (error) return <p>Error: {error.message}</p>;
-  console.log("Data: ", data?.data);
 
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-gray-900 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-red-500"></div>
-      </div>
-    );
-  }
+  if (isLoading) return <Loader />;
 
   return (
     <HeaderFooter>

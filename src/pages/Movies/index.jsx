@@ -6,6 +6,7 @@ import SearchIcon from "../../assets/svgs/search.svg?react";
 import HeaderFooter from "../../components/layout/HeaderFooter";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import useDebounce from "../../hooks/useDebounce";
+import { Loader } from "../../components/ui/Loader";
 
 const Movies = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -31,15 +32,10 @@ const Movies = () => {
       keepPreviousData: true,
     });
   const movies = useMemo(() => {
-    const dataReturn = data?.pages?.flatMap((page) => page.data.results);
-
-    return dataReturn;
+    return data?.pages?.flatMap((page) => page.data.results);
   }, [data]);
 
-  console.log({ movies });
-  console.log({ data });
-
-  if (isLoading) return <p>Loading movies...</p>;
+  if (isLoading) return <Loader />;
   if (error) return <p>Error: {error.message}</p>;
 
   const handleSearchQuery = (e) => setSearchQuery(e.target.value);

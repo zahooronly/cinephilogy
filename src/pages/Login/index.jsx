@@ -10,30 +10,20 @@ import { TOKEN } from "../../lib/constants";
 import HeaderFooter from "../../components/layout/HeaderFooter";
 import useAuthStore from "../../app/authStore";
 import { useForm } from "react-hook-form";
+import { useMutation } from "@tanstack/react-query";
 
 const Login = () => {
   const { register, handleSubmit } = useForm();
-  
+  const [showPassword, setShowPassword] = useState(false);
+
   const navigate = useNavigate();
   const user = useAuth();
-  
+
   const { addToken } = useAuthStore();
 
   useEffect(() => {
     if (user) navigate("/", { replace: true });
   }, [user, navigate]);
-
-  const [showPassword, setShowPassword] = useState(false);
-
-  const submitHandler = async (e) => {
-    try {
-      await AuthAPI.login(e);
-      addToken(TOKEN);
-      navigate("/");
-    } catch (err) {
-      console.error("Error:", err);
-    }
-  };
 
   const LOGIN_INPUT_FIELDS = [
     {
@@ -51,6 +41,23 @@ const Login = () => {
       placeholder: "••••••••",
     },
   ];
+
+  const { mutate, isError, error } = useMutation({
+    mutationFn: async (e) => await AuthAPI.login(e),
+    onSuccess: () => {
+      addToken(TOKEN);
+      navigate("/");
+    },
+    onError: isError ? console.error(error) : console.error("error"),
+  });
+  const submitHandler = (e) => {
+    try {
+      mutate(e);
+    } catch (err) {
+      console.error("Error:", err);
+    }
+  };
+
   return (
     <HeaderFooter>
       <main className="flex justify-center items-center h-screen">
