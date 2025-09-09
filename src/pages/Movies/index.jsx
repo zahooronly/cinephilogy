@@ -1,32 +1,31 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { PosterCard } from "../../components/layout/PosterCard";
 import { MoviesAPI } from "../../services/api";
 import { Pagination } from "../../components/layout/Pagination";
 import SearchIcon from "../../assets/svgs/search.svg?react";
 import HeaderFooter from "../../components/layout/HeaderFooter";
+import { useQuery } from "@tanstack/react-query";
+import useDebounce from "../../hooks/useDebounce";
 
 const Movies = () => {
-  const [movies, setMovies] = useState([]);
   const [page, setPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
+  const debouncedSearch = useDebounce(searchQuery, 500);
 
-  useEffect(() => {
-    const fetchMovies = async () => {
-      try {
-        if (searchQuery) {
-          const response = await MoviesAPI.getSearchedMovies(searchQuery);
-          setMovies(response.data.results);
-          return;
-        }
-        const response = await MoviesAPI.getAll(page);
-        setMovies((prev) => [...prev, ...response.data.results]);
-      } catch (err) {
-        console.error("Error: ", err);
-      }
-    };
+  const fetchMovies = async ({ queryKey }) => {
+    const [_key, page, debouncedSearch] = queryKey;
+    return debouncedSearch
+      ? await MoviesAPI.getSearchedMovies(debouncedSearch)
+      : await MoviesAPI.getAll(page);
+  };
 
-    fetchMovies();
-  }, [page, searchQuery]);
+  const { data, error, isLoading } = useQuery({
+    queryKey: ["movies", page, debouncedSearch],
+    queryFn: fetchMovies,
+  });
+
+  if (isLoading) return <p>Loading movies...</p>;
+  if (error) return <p>Error: {error.message}</p>;
 
   const handleSearchQuery = (e) => setSearchQuery(e.target.value);
 
@@ -46,8 +45,8 @@ const Movies = () => {
           <SearchIcon className="absolute w-5 h-5 right-2" />
         </div>
         <div className="flex gap-5 flex-wrap justify-center items-center">
-          {movies.length !== 0 ? (
-            movies
+          {data.data.results.length !== 0 ? (
+            data.data.results
               .filter((movie) => movie.poster_path)
               .filter((movie) => movie.title !== "Together")
               .map((movie, index) => <PosterCard key={index} movie={movie} />)

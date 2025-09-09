@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router";
 import { MoviesAPI } from "../../../services/api";
 import BookmarkIcon from "../../../assets/svgs/bookmark.svg?react";
@@ -17,16 +16,27 @@ import { Tag } from "../../../components/ui/Tag";
 import HeaderFooter from "../../../components/layout/HeaderFooter";
 import useFavouriteMoviesStore from "../../../app/favouriteMoviesStore";
 import { formatDate, formatRuntime, getStarRating } from "../../../lib/utils";
+import { useQuery } from "@tanstack/react-query";
 
 const MoviesDetail = () => {
   const { id } = useParams();
-  const [movie, setMovie] = useState({});
-  const [isLoading, setIsLoading] = useState(true);
   const { addFavourite, removeFavourite, favouriteMovies } =
     useFavouriteMoviesStore();
 
+  const fetchMovies = async ({ queryKey }) => {
+    const [_key, id] = queryKey;
+
+    return await MoviesAPI.getMovieDetail(Number(id));
+  };
+
+  const { data, error, isLoading } = useQuery({
+    queryKey: ["movies-detail", id],
+    queryFn: fetchMovies,
+  });
+  const movie = data?.data;
+
   const isFavourite = favouriteMovies.some(
-    (favMovie) => favMovie.id === movie.id
+    (favMovie) => favMovie.id === movie?.id
   );
 
   const handleFavourite = (movie) => () => {
@@ -37,20 +47,8 @@ const MoviesDetail = () => {
     }
   };
 
-  useEffect(() => {
-    const fetchMovieDetail = async () => {
-      setIsLoading(true);
-      try {
-        const res = await MoviesAPI.getMovieDetail(Number(id));
-        setMovie(res.data);
-        setIsLoading(false);
-      } catch (err) {
-        console.error(err);
-        setIsLoading(false);
-      }
-    };
-    fetchMovieDetail();
-  }, [id]);
+  if (error) return <p>Error: {error.message}</p>;
+  console.log("Data: ", data?.data);
 
   if (isLoading) {
     return (
