@@ -1,28 +1,43 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { PosterCard } from "../../components/layout/PosterCard";
 import { MoviesAPI } from "../../services/api";
 import { Pagination } from "../../components/layout/Pagination";
 import SearchIcon from "../../assets/svgs/search.svg?react";
 import HeaderFooter from "../../components/layout/HeaderFooter";
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import useDebounce from "../../hooks/useDebounce";
 
 const Movies = () => {
-  const [page, setPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
   const debouncedSearch = useDebounce(searchQuery, 500);
 
-  const fetchMovies = async ({ queryKey }) => {
-    const [_key, page, debouncedSearch] = queryKey;
+  const fetchMovies = async ({ queryKey, pageParam = 1 }) => {
+    const [_key, debouncedSearch] = queryKey;
     return debouncedSearch
       ? await MoviesAPI.getSearchedMovies(debouncedSearch)
-      : await MoviesAPI.getAll(page);
+      : await MoviesAPI.getAll(pageParam);
   };
 
-  const { data, error, isLoading } = useQuery({
-    queryKey: ["movies", page, debouncedSearch],
-    queryFn: fetchMovies,
-  });
+  const { data, error, isLoading, fetchNextPage, isFetchingNextPage } =
+    useInfiniteQuery({
+      queryKey: ["movies", debouncedSearch],
+      queryFn: fetchMovies,
+      getNextPageParam: (lastPage) => {
+        return lastPage.data.page <= lastPage.data.total_pages
+          ? lastPage.data.page + 1
+          : undefined;
+      },
+      staleTime: 1000 * 60 * 5,
+      keepPreviousData: true,
+    });
+  const movies = useMemo(() => {
+    const dataReturn = data?.pages?.flatMap((page) => page.data.results);
+
+    return dataReturn;
+  }, [data]);
+
+  console.log({ movies });
+  console.log({ data });
 
   if (isLoading) return <p>Loading movies...</p>;
   if (error) return <p>Error: {error.message}</p>;
@@ -45,8 +60,8 @@ const Movies = () => {
           <SearchIcon className="absolute w-5 h-5 right-2" />
         </div>
         <div className="flex gap-5 flex-wrap justify-center items-center">
-          {data.data.results.length !== 0 ? (
-            data.data.results
+          {movies.length !== 0 ? (
+            movies
               .filter((movie) => movie.poster_path)
               .filter((movie) => movie.title !== "Together")
               .map((movie, index) => <PosterCard key={index} movie={movie} />)
@@ -58,7 +73,11 @@ const Movies = () => {
             </div>
           )}
         </div>
-        <Pagination page={page} setPage={setPage} />
+        <Pagination
+          onClick={() => fetchNextPage()}
+          disabled={isFetchingNextPage}
+          title={isFetchingNextPage ? "Loading..." : "Load More"}
+        />
       </div>
     </HeaderFooter>
   );
