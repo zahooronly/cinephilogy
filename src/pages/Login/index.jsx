@@ -17,15 +17,17 @@ import toast from "react-hot-toast";
 const Login = () => {
   const { register, handleSubmit } = useForm();
   const [showPassword, setShowPassword] = useState(false);
+  const originalToken = import.meta.env.VITE_ACCESS_TOKEN;
 
   const navigate = useNavigate();
   const user = useAuth();
 
-  const { addToken } = useAuthStore();
+  const { addToken, removeToken } = useAuthStore();
 
   useEffect(() => {
-    if (user) navigate("/", { replace: true });
-  }, [user, navigate]);
+    if (user === originalToken) navigate("/", { replace: true });
+    else removeToken();
+  }, [user, navigate, originalToken, removeToken]);
 
   const LOGIN_INPUT_FIELDS = [
     {
