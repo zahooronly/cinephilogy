@@ -18,6 +18,8 @@ import useFavouriteMoviesStore from "../../../app/favouriteMoviesStore";
 import { formatDate, formatRuntime, getStarRating } from "../../../lib/utils";
 import { useQuery } from "@tanstack/react-query";
 import { Loader } from "../../../components/ui/Loader";
+import { DisplayError } from "../../../components/ui/DisplayError";
+import { REACT_QUERY_CONFIG } from "../../../lib/constants/queryConfig";
 
 const MoviesDetail = () => {
   const { id } = useParams();
@@ -25,7 +27,7 @@ const MoviesDetail = () => {
     useFavouriteMoviesStore();
 
   const fetchMovies = async ({ queryKey }) => {
-    const [_key, id] = queryKey;
+    const [_key] = queryKey;
 
     return await MoviesAPI.getMovieDetail(Number(id));
   };
@@ -33,6 +35,7 @@ const MoviesDetail = () => {
   const { data, error, isLoading } = useQuery({
     queryKey: ["movies-detail", id],
     queryFn: fetchMovies,
+    ...REACT_QUERY_CONFIG.DEFAULT,
   });
   const movie = data?.data;
 
@@ -48,9 +51,19 @@ const MoviesDetail = () => {
     }
   };
 
-  if (error) return <p>Error: {error.message}</p>;
+  if (error)
+    return (
+      <HeaderFooter>
+        <DisplayError errorMessage={error.message} cause={error?.cause} />
+      </HeaderFooter>
+    );
 
-  if (isLoading) return <Loader />;
+  if (isLoading)
+    return (
+      <HeaderFooter>
+        <Loader />
+      </HeaderFooter>
+    );
 
   return (
     <HeaderFooter>

@@ -1,17 +1,32 @@
 import { useState } from "react";
 import StarIcon from "../../assets/svgs/star.svg?react";
-import BookmarkIcon from "../../assets/svgs/bookmark.svg?react";
 import { Tag } from "../ui/Tag";
 import { IMAGES_BASE_URL } from "../../lib/constants";
 import { formatRuntime } from "../../lib/utils";
-import { Link } from "react-router";
+import useFavouriteMoviesStore from "../../app/favouriteMoviesStore";
+import { Heart } from "lucide-react";
+import toast from "react-hot-toast";
 
-export const PosterCard = ({ key, movie }) => {
+export const MovieCard = ({ movie }) => {
   const [isHovered, setIsHovered] = useState(false);
+  const { addFavourite, favouriteMovies, removeFavourite } =
+    useFavouriteMoviesStore();
+
+  const handleAddFavoriteClick = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!favouriteMovies.includes(movie)) {
+      addFavourite(movie);
+      console.log("Success");
+      toast.success("Added to favourites!");
+    } else {
+      removeFavourite(movie.id);
+      toast.success("Removed from favourites!");
+    }
+  };
 
   return (
     <div
-      key={movie?.id}
       className="relative w-full sm:w-[170px] md:w-[250px] lg:w-[350px] h-[300px] sm:h-[350px] md:h-[400px] lg:h-[475px] transition-all duration-200 group"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
@@ -48,17 +63,23 @@ export const PosterCard = ({ key, movie }) => {
 
         {isHovered && (
           <div className="absolute rounded-xl inset-0 bg-gradient-to-t from-black via-black/90 to-black/70 flex flex-col justify-between p-3 sm:p-4 md:p-5 lg:p-6 transition-all duration-300">
-            {/* Heart icon for favorites */}
-            <div className="p-1.5 bg-white/70 max-w-8 w-full rounded-full backdrop-blur-sm cursor-pointer hover:bg-white/90 transition-colors duration-200">
-              <BookmarkIcon className="w-4 h-4 sm:w-5 sm:h-5" />
+            <div
+              className="p-1.5 max-w-8 w-full rounded-full backdrop-blur-sm cursor-pointer transition-colors duration-200"
+              onClick={handleAddFavoriteClick}
+            >
+              <Heart
+                className={`w-4 h-4 sm:w-5 sm:h-5 ${
+                  favouriteMovies.includes(movie)
+                    ? "stroke-red-500"
+                    : "stroke-white"
+                }`}
+              />
             </div>
 
             <div>
-              <Link to={`/movies/${movie.id}`}>
-                <h3 className="text-white font-semibold text-lg sm:text-xl tracking-wide mb-1 sm:mb-2 font-sans">
-                  {movie.title}
-                </h3>
-              </Link>
+              <h3 className="text-white font-semibold text-lg sm:text-xl tracking-wide mb-1 sm:mb-2 font-sans">
+                {movie.title}
+              </h3>
 
               <div className="flex items-center flex-wrap gap-1 sm:gap-2 text-gray-200 text-xs sm:text-sm font-medium mb-1 sm:mb-2">
                 <span className="text-gray-300">{movie.release_date}</span>

@@ -2,8 +2,8 @@ import { useState } from "react";
 import { Link, NavLink } from "react-router";
 import { Button } from "../ui/Button";
 import { useLogout } from "../../hooks/useLogout";
-import { useAuth } from "../../lib/utils";
 import { NAVIVATION_LINKS } from "../../lib/constants/routesConstants";
+import { useAuth } from "../../hooks/useAuthHooks";
 
 export const Header = () => {
   const logout = useLogout();

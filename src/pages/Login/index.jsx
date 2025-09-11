@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { AuthWrapper } from "../../components/layout/AuthWrapper";
 import { Button } from "../../components/ui/Button";
 import { useNavigate } from "react-router";
-import { useAuth } from "../../lib/utils";
 import { AuthAPI } from "../../services/api";
 import OpenEyeIcon from "../../assets/svgs/open-eye.svg?react";
 import CloseEyeIcon from "../../assets/svgs/close-eye.svg?react";
@@ -11,6 +10,9 @@ import HeaderFooter from "../../components/layout/HeaderFooter";
 import useAuthStore from "../../app/authStore";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
+import { useAuth } from "../../hooks/useAuthHooks";
+import { errorMessage } from "../../lib/utils";
+import toast from "react-hot-toast";
 
 const Login = () => {
   const { register, handleSubmit } = useForm();
@@ -42,15 +44,16 @@ const Login = () => {
     },
   ];
 
-  const { mutate } = useMutation({
-    mutationFn: async (e) => await AuthAPI.login(e),
+  const { mutate, isPending } = useMutation({
+    mutationFn: async (payload) => await AuthAPI.login(payload),
     onSuccess: () => {
       addToken(TOKEN);
       navigate("/");
+      toast.success("Login successful.");
     },
-    onError: (err) => console.error(err.message),
+    onError: (err) => errorMessage(err),
   });
-  const submitHandler = (e) => mutate(e);
+  const submitHandler = (loginPayload) => mutate(loginPayload);
 
   return (
     <HeaderFooter>
@@ -85,7 +88,7 @@ const Login = () => {
                 </div>
               );
             })}
-            <Button>Login</Button>
+            <Button isLoading={isPending}>Login</Button>
           </form>
         </AuthWrapper>
       </main>
