@@ -1,10 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { AuthWrapper } from "../../components/layout/AuthWrapper";
 import { Button } from "../../components/ui/Button";
 import { useNavigate } from "react-router";
 import { AuthAPI } from "../../services/api";
-import OpenEyeIcon from "../../assets/svgs/open-eye.svg?react";
-import CloseEyeIcon from "../../assets/svgs/close-eye.svg?react";
 import { TOKEN } from "../../lib/constants";
 import HeaderFooter from "../../components/layout/HeaderFooter";
 import useAuthStore from "../../app/authStore";
@@ -13,10 +11,11 @@ import { useMutation } from "@tanstack/react-query";
 import { useAuth } from "../../hooks/useAuthHooks";
 import { errorMessage } from "../../lib/utils";
 import toast from "react-hot-toast";
+import InputFieldFactory from "../../components/layout/InputFieldFactory";
+import { LOGIN_INPUT_FIELDS } from "../../lib/constants/formConstants";
 
 const Login = () => {
   const { register, handleSubmit } = useForm();
-  const [showPassword, setShowPassword] = useState(false);
 
   const navigate = useNavigate();
   const user = useAuth();
@@ -26,23 +25,6 @@ const Login = () => {
   useEffect(() => {
     if (user) navigate("/", { replace: true });
   }, [user, navigate]);
-
-  const LOGIN_INPUT_FIELDS = [
-    {
-      label: "Email: ",
-      type: "email",
-      id: "email",
-      name: "email",
-      placeholder: "email@example.com",
-    },
-    {
-      label: "Password: ",
-      type: showPassword ? "text" : "password",
-      id: "password",
-      name: "password",
-      placeholder: "••••••••",
-    },
-  ];
 
   const { mutate, isPending } = useMutation({
     mutationFn: async (payload) => await AuthAPI.login(payload),
@@ -65,26 +47,13 @@ const Login = () => {
           >
             {LOGIN_INPUT_FIELDS.map((input) => {
               return (
-                <div key={input.id} className="relative space-y-1.5">
-                  <label htmlFor={input.id} className="text-sm font-medium">
-                    {input.label}
-                  </label>
-                  <input
-                    type={input.type}
-                    {...register(input.name)}
-                    id={input.id}
-                    className={`w-full p-2 border focus:outline-none focus:ring-1 focus:ring-black transition-all duration-200 `}
-                    placeholder={input.placeholder}
+                <div>
+                  <InputFieldFactory
+                    key={input.id}
+                    errors={input.validation}
+                    field={input}
+                    register={register}
                   />
-                  {input.id == "password" && (
-                    <button
-                      type="button"
-                      className="absolute cursor-pointer right-2 top-11 -translate-y-1/2"
-                      onClick={() => setShowPassword(!showPassword)}
-                    >
-                      {showPassword ? <OpenEyeIcon /> : <CloseEyeIcon />}
-                    </button>
-                  )}
                 </div>
               );
             })}
