@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { AuthWrapper } from "../../components/layout/AuthWrapper";
 import { Button } from "../../components/ui/Button";
 import { useNavigate } from "react-router";
@@ -13,9 +13,11 @@ import { errorMessage } from "../../lib/utils";
 import toast from "react-hot-toast";
 import InputFieldFactory from "../../components/layout/InputFieldFactory";
 import { LOGIN_INPUT_FIELDS } from "../../lib/constants/formConstants";
+import { Eye, EyeOff } from "lucide-react";
 
 const Login = () => {
   const { register, handleSubmit } = useForm();
+  const [showPassword, setShowPassword] = useState(false);
 
   const navigate = useNavigate();
   const user = useAuth();
@@ -37,6 +39,11 @@ const Login = () => {
   });
   const submitHandler = (loginPayload) => mutate(loginPayload);
 
+  const passwordHandler = (input) => {
+    input.type = showPassword ? "text" : "password";
+    setShowPassword(!showPassword);
+  };
+
   return (
     <HeaderFooter>
       <main className="flex justify-center items-center h-screen">
@@ -47,13 +54,21 @@ const Login = () => {
           >
             {LOGIN_INPUT_FIELDS.map((input) => {
               return (
-                <div>
+                <div className="relative">
                   <InputFieldFactory
                     key={input.id}
                     errors={input.validation}
                     field={input}
                     register={register}
                   />
+                  {input.id == "password" && (
+                    <span
+                      className="absolute cursor-pointer right-2 top-13 -translate-y-1/2"
+                      onClick={() => passwordHandler(input)}
+                    >
+                      {showPassword ? <Eye /> : <EyeOff />}
+                    </span>
+                  )}
                 </div>
               );
             })}
