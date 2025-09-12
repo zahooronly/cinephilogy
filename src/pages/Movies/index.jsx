@@ -93,14 +93,12 @@ const Movies = () => {
             </div>
           )}
         </div>
-        {searchQuery.length === 0 && (
-          <Pagination
-            onClick={() => fetchNextPage()}
-            disabled={isFetchingNextPage}
-            isLoading={isFetchingNextPage}
-            title={isFetchingNextPage ? "Loading..." : "Load More"}
-          />
-        )}
+        <Pagination
+          onClick={() => fetchNextPage()}
+          disabled={isFetchingNextPage}
+          isLoading={isFetchingNextPage}
+          title={isFetchingNextPage ? "Loading..." : "Load More"}
+        />
       </div>
     </HeaderFooter>
   );
