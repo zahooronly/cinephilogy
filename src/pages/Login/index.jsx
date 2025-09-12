@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { AuthWrapper } from "../../components/layout/AuthWrapper";
 import { Button } from "../../components/ui/Button";
 import { useNavigate } from "react-router";
@@ -10,18 +10,18 @@ import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import { useAuth } from "../../hooks/useAuthHooks";
 import { errorMessage } from "../../lib/utils";
-import toast from "react-hot-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { InputField } from "../../components/layout/InputField";
 import { LOGIN_FIELDS_DATA } from "../../lib/constants/formConstants";
-import { Eye, EyeOff } from "lucide-react";
-import { parse } from "zod";
 
 const Login = () => {
-  const { register, handleSubmit } = useForm({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
     resolver: zodResolver(LOGIN_FIELDS_DATA.schema),
   });
-  const [showPassword, setShowPassword] = useState(false);
   const originalToken = import.meta.env.VITE_ACCESS_TOKEN;
 
   const navigate = useNavigate();
@@ -39,22 +39,10 @@ const Login = () => {
     onSuccess: () => {
       addToken(TOKEN);
       navigate("/");
-      toast.success("Login successful.");
     },
     onError: (err) => errorMessage(err),
   });
-  const submitHandler = (loginPayload) => {
-    console.log(loginPayload);
-    const validation = parse(loginPayload);
-    console.log(validation);
-    if (validation.success) mutate(validation.data);
-    mutate(loginPayload);
-  };
-
-  const passwordHandler = (input) => {
-    input.type = showPassword ? "text" : "password";
-    setShowPassword(!showPassword);
-  };
+  const submitHandler = (loginPayload) => mutate(loginPayload);
 
   return (
     <HeaderFooter>
@@ -66,21 +54,12 @@ const Login = () => {
           >
             {LOGIN_FIELDS_DATA.inputFields.map((input) => {
               return (
-                <div className="relative" key={input.id}>
-                  <InputField
-                    key={input.id}
-                    field={input}
-                    register={register}
-                  />
-                  {input.id == "password" && (
-                    <span
-                      className="absolute cursor-pointer right-2 top-13 -translate-y-1/2"
-                      onClick={() => passwordHandler(input)}
-                    >
-                      {showPassword ? <Eye /> : <EyeOff />}
-                    </span>
-                  )}
-                </div>
+                <InputField
+                  key={input.id}
+                  field={input}
+                  register={register}
+                  error={errors[input.id]}
+                />
               );
             })}
             <Button isLoading={isPending}>Login</Button>

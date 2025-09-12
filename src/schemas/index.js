@@ -26,4 +26,40 @@ export const signupSchema = z.object({
     .min(3, { message: "Name must be at least 3 characters long" }),
   email: emailSchema,
   password: passwordSchema,
+  gender: z
+    .enum(["male", "female", "other", "prefer_not_to_say"], {
+      required_error: "Please select a gender",
+      invalid_type_error: "Please select a valid gender option",
+    })
+    .default("prefer_not_to_say"),
+
+  age: z
+    .number()
+    .int("Age must be a whole number")
+    .min(18, "You must be at least 18 years old")
+    .max(120, "Please enter a valid age")
+    .default(18),
+
+  interestedFields: z
+    .array(
+      z.enum(
+        [
+          "action",
+          "comedy",
+          "drama",
+          "horror",
+          "romance",
+          "thriller",
+          "documentary",
+          "animation",
+        ],
+        {
+          required_error: "Please select a valid genre",
+          invalid_type_error: "Invalid genre selection",
+        }
+      )
+    )
+    .min(1, "Please select at least one field of interest")
+    .max(5, "You can select up to 5 fields of interest")
+    .default([]),
 });
