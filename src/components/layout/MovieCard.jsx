@@ -5,7 +5,6 @@ import { IMAGES_BASE_URL } from "../../lib/constants";
 import { formatRuntime } from "../../lib/utils";
 import useFavouriteMoviesStore from "../../app/favouriteMoviesStore";
 import { Heart } from "lucide-react";
-import toast from "react-hot-toast";
 
 export const MovieCard = ({ movie }) => {
   const [isHovered, setIsHovered] = useState(false);
@@ -17,11 +16,8 @@ export const MovieCard = ({ movie }) => {
     e.stopPropagation();
     if (!favouriteMovies.includes(movie)) {
       addFavourite(movie);
-      console.log("Success");
-      toast.success("Added to favourites!");
     } else {
       removeFavourite(movie.id);
-      toast.success("Removed from favourites!");
     }
   };
 
