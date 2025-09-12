@@ -1,7 +1,6 @@
-import { loginSchema, signupSchema } from "../../schemas";
+import * as z from "zod";
 
 export const LOGIN_FIELDS_DATA = {
-  schema: loginSchema,
   inputFields: [
     {
       id: "email",
@@ -16,9 +15,14 @@ export const LOGIN_FIELDS_DATA = {
       inputType: "text",
     },
   ],
+  schema: z.object({
+    email: z.email("Invalid email address"),
+    password: z
+      .string()
+      .min(8, { message: "Password must be at least 8 characters long" }),
+  }),
 };
 export const SIGNUP_FIELDS_DATA = {
-  schema: signupSchema,
   inputFields: [
     {
       id: "name",
@@ -69,9 +73,23 @@ export const SIGNUP_FIELDS_DATA = {
       inputType: "text",
     },
     {
-      id: "tnc",
+      id: "TnC",
       label: "Accept all terms and conditions",
       inputType: "checkbox",
     },
   ],
+  schema: z.object({
+    name: z
+      .string()
+      .min(3, { message: "Name must be at least 3 characters long" }),
+    email: z.email("Invalid email address"),
+    password: z
+      .string()
+      .min(8, { message: "Password must be at least 8 characters long" }),
+    gender: z.enum(["male", "female", "other", "prefer_not_to_say"], {
+      message: "Please select your gender",
+    }),
+    age: z.string().min(1, { message: "Please enter a your age" }),
+    TnC: z.boolean(),
+  }),
 };

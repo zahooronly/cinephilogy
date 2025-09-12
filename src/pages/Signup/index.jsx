@@ -18,24 +18,25 @@ const Signup = () => {
   } = useForm({
     resolver: zodResolver(SIGNUP_FIELDS_DATA.schema),
   });
+
+
   const originalToken = import.meta.env.VITE_ACCESS_TOKEN;
 
   const navigate = useNavigate();
   const user = useAuth();
 
   const removeToken = useAuthStore((state) => state.removeToken);
-
   useEffect(() => {
     if (user === originalToken) navigate("/", { replace: true });
     else removeToken();
   }, [user, navigate, originalToken, removeToken]);
 
-  const submitHandler = (signupPayload) => {
+  const submitHandler = (signupPayload) =>
     console.log("User Info: ", signupPayload);
-  };
+
   return (
     <HeaderFooter>
-      <main className="flex justify-center items-center h-screen">
+      <div className="flex justify-center items-center h-screen">
         <AuthWrapper headerText="Signup here!" className="m-4">
           <form
             onSubmit={handleSubmit(submitHandler)}
@@ -51,10 +52,10 @@ const Signup = () => {
                 />
               );
             })}
-            <Button onClick={submitHandler}>Signup</Button>
+            <Button>Signup</Button>
           </form>
         </AuthWrapper>
-      </main>
+      </div>
     </HeaderFooter>
   );
 };
