@@ -1,7 +1,7 @@
 import useAuthStore from "../app/authStore";
 
 export const useAuth = () => {
-  const { token } = useAuthStore();
-  if (!token) return false;
-  return true;
+  const token = useAuthStore((state) => state.token);
+  if (token) return token;
+  return false;
 };
