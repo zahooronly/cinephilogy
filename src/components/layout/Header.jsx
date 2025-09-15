@@ -2,12 +2,12 @@ import { useState } from "react";
 import { Link, NavLink } from "react-router";
 import { Button } from "../ui/Button";
 import { useLogout } from "../../hooks/useLogout";
-import { getUser } from "../../lib/utils";
 import { NAVIVATION_LINKS } from "../../lib/constants/routesConstants";
+import { useToken } from "../../hooks/useToken";
 
 export const Header = () => {
   const logout = useLogout();
-  const user = getUser();
+  const token = useToken();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -61,10 +61,15 @@ export const Header = () => {
         </ul>
       </div>
       <div className="hidden md:flex items-center space-x-6">
-        {!user ? (
-          <Link to="/login">
-            <Button>Login</Button>
-          </Link>
+        {!token ? (
+          <>
+            <Link to="/login">
+              <Button>Login</Button>
+            </Link>
+            <Link to="/signup">
+              <Button>Signup</Button>
+            </Link>
+          </>
         ) : (
           <Button onClick={logout}>Logout</Button>
         )}
@@ -86,10 +91,15 @@ export const Header = () => {
           </ul>
           <div className="mt-6 space-y-4">
             <div className="pt-2">
-              {!user ? (
-                <Link to="/login" className="block w-full">
-                  <Button className="w-full">Login</Button>
-                </Link>
+              {!token ? (
+                <>
+                  <Link to="/login">
+                    <Button>Login</Button>
+                  </Link>
+                  <Link to="/signup">
+                    <Button>Signup</Button>
+                  </Link>
+                </>
               ) : (
                 <Button onClick={logout} className="w-full">
                   Logout
