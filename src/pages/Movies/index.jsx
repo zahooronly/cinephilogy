@@ -7,11 +7,13 @@ import { debounce } from "lodash";
 import { SafeRender } from "../../components/layout/SafeRender";
 import { REACT_QUERY_CONFIG } from "../../lib/constants/queryConfig";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { Loader } from "../../components/ui/Loader";
 
 const Movies = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchParams, setSearchParams] = useSearchParams();
   const search = searchParams.get("search");
+  
   useEffect(() => {
     setSearchQuery(search);
   }, []);
@@ -66,6 +68,11 @@ const Movies = () => {
         dataLength={movies.length}
         next={fetchNextPage}
         hasMore={!!hasNextPage}
+        loader={
+          isFetchingNextPage ? (
+            <Loader />
+          ) : null
+        }
         endMessage={
           !isFetchingNextPage && !hasNextPage ? (
             <p className="text-center text-gray-400 mt-4">
