@@ -25,7 +25,7 @@ axiosInstance.interceptors.response.use(
   },
   (error) => {
     if (error.response?.status === 401) {
-      const removeToken = useAuthStore.getState().removeToken();
+      const { removeToken } = useAuthStore.getState();
       removeToken();
       window.location.href = "/login";
     }

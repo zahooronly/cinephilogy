@@ -10,28 +10,33 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { Loader } from "../../components/ui/Loader";
 
 const Movies = () => {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [searchParams, setSearchParams] = useSearchParams();
-  const search = searchParams.get("search");
+  const [search, setSearch] = useState("");
+  const [queryParams, setQueryParams] = useSearchParams();
+  const searchParam = queryParams.get("search") || "";
 
   useEffect(() => {
-    setSearchQuery(search);
+    setSearch(searchParam);
   }, []);
 
   const updateSearch = useCallback(
     debounce((value) => {
-      setSearchQuery(value);
-      value ? setSearchParams({ search: value }) : setSearchParams({});
+      setSearch(value);
+      value ? setQueryParams({ search: value }) : setQueryParams({});
     }, 500),
-    [setSearchParams]
+    [setQueryParams]
   );
 
-  const handleSearchQuery = (e) => updateSearch(e.target.value);
+  const handleSearch = (e) => updateSearch(e.target.value);
 
   const fetchMovies = async ({ pageParam = 1 }) => {
-    const getMovies = searchQuery
-      ? () => MoviesAPI.getSearchedMovies(searchQuery, pageParam)
-      : () => MoviesAPI.getAll(pageParam);
+    const movieSearchParams = {
+      query: search,
+      page: pageParam,
+    };
+
+    const getMovies = search
+      ? () => MoviesAPI.getSearchedMovies(movieSearchParams)
+      : () => MoviesAPI.getAll(movieSearchParams);
     return await getMovies();
   };
 
@@ -43,7 +48,7 @@ const Movies = () => {
     isFetchingNextPage,
     hasNextPage,
   } = useInfiniteQuery({
-    queryKey: ["movies", searchQuery],
+    queryKey: ["movies", search],
     queryFn: fetchMovies,
     getNextPageParam: (lastPage) =>
       lastPage.data.page < lastPage.data.total_pages
@@ -61,7 +66,7 @@ const Movies = () => {
     <SafeRender
       error={error}
       isLoading={isLoading}
-      handleSearchQuery={handleSearchQuery}
+      handleSearchQuery={handleSearch}
       searchQuery={search}
     >
       <InfiniteScroll
@@ -82,8 +87,8 @@ const Movies = () => {
             movies
               ?.filter((movie) => movie.poster_path)
               ?.filter((movie) => movie.title !== "Together")
-              ?.map((movie) => (
-                <Link to={`${movie.id}`} key={movie.id}>
+              ?.map((movie, index) => (
+                <Link to={`${movie.id}`} key={index}>
                   <MovieCard movie={movie} />
                 </Link>
               ))
