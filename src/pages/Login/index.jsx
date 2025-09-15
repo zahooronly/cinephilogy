@@ -1,59 +1,89 @@
+import { useEffect, useState } from "react";
 import { AuthWrapper } from "../../components/layout/AuthWrapper";
 import { Button } from "../../components/ui/Button";
 import { useNavigate } from "react-router";
+import { getUser } from "../../lib/utils";
 import { AuthAPI } from "../../services/api";
+import OpenEyeIcon from "../../assets/svgs/open-eye.svg?react";
+import CloseEyeIcon from "../../assets/svgs/close-eye.svg?react";
 import { TOKEN } from "../../lib/constants";
 import HeaderFooter from "../../components/layout/HeaderFooter";
-import useAuthStore from "../../app/authStore";
-import { useForm } from "react-hook-form";
-import { useMutation } from "@tanstack/react-query";
-import { errorMessage } from "../../lib/utils";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { InputField } from "../../components/layout/InputField";
-import { LOGIN_FIELDS_DATA } from "../../lib/constants/formConstants";
 
 const Login = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    resolver: zodResolver(LOGIN_FIELDS_DATA.schema),
-  });
-
   const navigate = useNavigate();
+  const user = getUser();
 
-  const addToken = useAuthStore((state) => state.addToken);
+  useEffect(() => {
+    if (user) navigate("/", { replace: true });
+  }, [user, navigate]);
 
-  const { mutate, isPending } = useMutation({
-    mutationFn: async (payload) => await AuthAPI.login(payload),
-    onSuccess: () => {
-      addToken(TOKEN);
-      navigate("/");
-    },
-    onError: (err) => errorMessage(err),
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
   });
-  const submitHandler = (loginPayload) => mutate(loginPayload);
+
+  const [showPassword, setShowPassword] = useState(false);
+
+  const loginHandler = async (e) => {
+    e.preventDefault();
+    try {
+      await AuthAPI.login(formData);
+      localStorage.setItem("token", TOKEN);
+      navigate("/");
+
+      setFormData({
+        email: "",
+        password: "",
+      });
+    } catch (err) {
+      console.error("Error:", err);
+    }
+  };
+
+  const handlePasswordChange = (e) =>
+    setFormData({ ...formData, password: e.target.value });
+  const handleEmailChange = (e) =>
+    setFormData({ ...formData, email: e.target.value });
 
   return (
     <HeaderFooter>
       <main className="flex justify-center items-center h-screen">
         <AuthWrapper headerText="Login here!" className="m-4">
-          <form
-            onSubmit={handleSubmit(submitHandler)}
-            className="flex flex-col w-full gap-2 max-w-sm"
-          >
-            {LOGIN_FIELDS_DATA.inputFields.map((input) => {
-              return (
-                <InputField
-                  key={input.id}
-                  field={input}
-                  register={register}
-                  errorMessage={errors[input.id]?.message}
+          <form className="flex flex-col w-full gap-2 max-w-sm">
+            <div className="space-y-1.5">
+              <label className="text-sm font-medium" htmlFor="email">
+                Email
+              </label>
+              <input
+                type="email"
+                id="email"
+                placeholder="email@example.com"
+                className="w-full p-2 border focus:outline-none focus:ring-1 focus:ring-black transition-all duration-200"
+                onChange={handleEmailChange}
+              />
+            </div>
+            <div className="space-y-1.5">
+              <label className="text-sm font-medium" htmlFor="password">
+                Password
+              </label>
+              <div className="relative">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  id="password"
+                  placeholder="••••••••"
+                  className="w-full p-2 border focus:outline-none focus:ring-1 focus:ring-black transition-all duration-200"
+                  onChange={handlePasswordChange}
                 />
-              );
-            })}
-            <Button isLoading={isPending}>Login</Button>
+                <button
+                  type="button"
+                  className="absolute cursor-pointer right-2 top-1/2 -translate-y-1/2"
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? <OpenEyeIcon /> : <CloseEyeIcon />}
+                </button>
+              </div>
+            </div>
+            <Button onClick={loginHandler}>Login</Button>
           </form>
         </AuthWrapper>
       </main>

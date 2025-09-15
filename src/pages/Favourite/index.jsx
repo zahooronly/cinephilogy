@@ -2,7 +2,6 @@ import HeaderFooter from "../../components/layout/HeaderFooter";
 import { Button } from "../../components/ui/Button";
 import useFavouriteMoviesStore from "../../app/favouriteMoviesStore";
 import { FavouriteMovieCard } from "../../components/layout/FavouriteMovieCard";
-import { Link } from "react-router";
 
 const Favourite = () => {
   const { favouriteMovies } = useFavouriteMoviesStore();
@@ -23,9 +22,7 @@ const Favourite = () => {
         ) : (
           <div className="flex gap-5 flex-wrap justify-center items-center">
             {favouriteMovies.map((movie) => (
-              <Link to={`/movies/${movie.id}`} key={movie.id}>
-                <FavouriteMovieCard movie={movie} />
-              </Link>
+              <FavouriteMovieCard key={movie.id} movie={movie} />
             ))}
           </div>
         )}
