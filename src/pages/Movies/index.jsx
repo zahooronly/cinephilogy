@@ -13,7 +13,7 @@ const Movies = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchParams, setSearchParams] = useSearchParams();
   const search = searchParams.get("search");
-  
+
   useEffect(() => {
     setSearchQuery(search);
   }, []);
@@ -21,7 +21,7 @@ const Movies = () => {
   const updateSearch = useCallback(
     debounce((value) => {
       setSearchQuery(value);
-      value.trim() ? setSearchParams({ search: value }) : setSearchParams({});
+      value ? setSearchParams({ search: value }) : setSearchParams({});
     }, 500),
     [setSearchParams]
   );
@@ -68,17 +68,13 @@ const Movies = () => {
         dataLength={movies.length}
         next={fetchNextPage}
         hasMore={!!hasNextPage}
-        loader={
-          isFetchingNextPage ? (
-            <Loader />
-          ) : null
-        }
+        loader={isFetchingNextPage ? <Loader /> : null}
         endMessage={
-          !isFetchingNextPage && !hasNextPage ? (
+          !hasNextPage && (
             <p className="text-center text-gray-400 mt-4">
               You have reached the end 🎬
             </p>
-          ) : null
+          )
         }
       >
         <div className="flex gap-5 py-8 flex-wrap justify-center items-center">
