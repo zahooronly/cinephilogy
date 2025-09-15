@@ -1,7 +1,7 @@
 import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 
-const TextField = ({ field, register, error }) => {
+const TextField = ({ field, register, errorMessage: errorMessage }) => {
   const [showPassword, setShowPassword] = useState(false);
   if (field.id == "password") {
     field.type = showPassword ? "text" : "password";
@@ -9,6 +9,7 @@ const TextField = ({ field, register, error }) => {
   const passwordHandler = () => {
     setShowPassword(!showPassword);
   };
+  if (field.inputType == "number") field.type = "number";
   return (
     <div className="flex relative flex-col gap-2">
       <label htmlFor={field.id}>{field.label}</label>
@@ -16,9 +17,9 @@ const TextField = ({ field, register, error }) => {
         id={field.id}
         type={field.type}
         placeholder={field.placeholder}
-        {...register(field.id, field.validation)}
+        {...register(field.id)}
         className={`w-full p-2 border focus:outline-none focus:ring-1 focus:ring-black transition-all ${
-          error ? "border-red-500 focus:ring-red-500" : "border-gray-300"
+          errorMessage ? "border-red-500 focus:ring-red-500" : "border-gray-300"
         } duration-200 ${field.className}`}
       />
       {field.id == "password" && (
@@ -29,19 +30,19 @@ const TextField = ({ field, register, error }) => {
           {showPassword ? <Eye /> : <EyeOff />}
         </span>
       )}
-      {error && (
-        <p className="text-red-500 text-sm font-medium">{error.message}</p>
+      {errorMessage && (
+        <p className="text-red-500 text-sm font-medium">{errorMessage}</p>
       )}
     </div>
   );
 };
 
-const RadioField = ({ field, register, error }) => {
+const RadioField = ({ field, register, errorMessage }) => {
   return (
-    <div className="flex gap-2">
+    <div className="flex flex-col gap-2">
       <label className="font-medium">{field.label}</label>
 
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-2 w-full">
         {field.options.map((option) => (
           <label
             key={option.value}
@@ -50,56 +51,59 @@ const RadioField = ({ field, register, error }) => {
             <input
               type="radio"
               value={option.value}
-              {...register(field.id, field.validation)}
+              {...register(field.id)}
               className={`w-4 h-4 ${
-                error ? "border-red-500 focus:ring-red-500" : "border-gray-300"
+                errorMessage
+                  ? "border-red-500 focus:ring-red-500"
+                  : "border-gray-300"
               }  ${field.className}`}
             />
             <span>{option.label}</span>
           </label>
         ))}
       </div>
-      {error && (
-        <p className="text-red-500 text-sm font-medium">{error.message}</p>
-      )}
+      <div>
+        {errorMessage && (
+          <p className="text-red-500 text-sm font-medium">{errorMessage}</p>
+        )}
+      </div>
     </div>
   );
 };
 
-const CheckboxField = ({ field, register, error }) => {
+const CheckboxField = ({ field, register, errorMessage }) => {
   return (
     <div className="flex items-center gap-2">
       <input
         id={field.id}
-        type={field.type}
-        {...register(field.id, field.validation)}
-        className={`w-4 h-4 border focus:outline-none focus:ring-1 focus:ring-black transition-all ${
-          error ? "border-red-500 focus:ring-red-500" : "border-gray-300"
+        type="checkbox"
+        {...register(field.id)}
+        className={`w-4 h-4 ${
+          errorMessage ? "border-red-500 focus:ring-red-500" : "border-gray-300"
         }  duration-200 ${field.className}`}
       />
       <label htmlFor={field.id}>{field.label}</label>
-      {error && (
-        <p className="text-red-500 text-sm font-medium">{error.message}</p>
+      {errorMessage && (
+        <p className="text-red-500 text-sm font-medium">{errorMessage}</p>
       )}
     </div>
   );
 };
 
-export function InputField({ field, register, error }) {
+export function InputField({ field, register, errorMessage }) {
   const fieldFactory = {
-    name: TextField,
-    email: TextField,
-    password: TextField,
+    text: TextField,
+    number: TextField,
     radio: RadioField,
     checkbox: CheckboxField,
   };
   const props = {
     field,
     register,
-    error,
+    errorMessage,
   };
 
-  const InputFieldComponent = fieldFactory[field.id];
+  const InputFieldComponent = fieldFactory[field.inputType];
   if (!InputFieldComponent) {
     return <p className="text-red-500">Unsupported field type: {field.type}</p>;
   }

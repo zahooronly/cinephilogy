@@ -21,12 +21,13 @@ export const MoviesAPI = {
       },
     });
   },
-  getSearchedMovies: (query) => {
+  getSearchedMovies: (query, page) => {
     return axiosInstance.get(`/search/movie`, {
       params: {
         include_adult: false,
         language: "en-US",
         query: query,
+        page: page,
       },
     });
   },
