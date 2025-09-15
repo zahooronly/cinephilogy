@@ -1,9 +1,9 @@
 import { Navigate } from "react-router";
-import { useToken } from "../../hooks/useToken";
+import { getUser } from "../../lib/utils";
 
 export const ProtectedRoutes = ({ children }) => {
-  const token = useToken();
-  if (!token) {
+  const isAuthenticated = getUser();
+  if (!isAuthenticated) {
     return <Navigate to="/login" replace />;
   }
   return children;

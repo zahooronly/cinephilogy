@@ -5,7 +5,6 @@ import Favourite from "../../pages/Favourite";
 import NotFound from "../../pages/404";
 import MoviesDetail from "../../pages/Movies/Detail";
 import MoviesLayout from "../../components/layout/MoviesLayout";
-import Signup from "../../pages/Signup";
 
 export const NAVIVATION_LINKS = [
   { title: "Home", url: "/" },
@@ -17,11 +16,6 @@ export const ROUTES_CONFIG = [
   {
     path: "login",
     element: <Login />,
-    isProtected: false,
-  },
-  {
-    path: "signup",
-    element: <Signup />,
     isProtected: false,
   },
   {
