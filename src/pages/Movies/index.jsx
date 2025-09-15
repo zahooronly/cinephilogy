@@ -3,12 +3,8 @@ import { MovieCard } from "../../components/layout/MovieCard";
 import { MoviesAPI } from "../../services/api";
 import { Pagination } from "../../components/layout/Pagination";
 import SearchIcon from "../../assets/svgs/search.svg?react";
-import HeaderFooter from "../../components/layout/HeaderFooter";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { Loader } from "../../components/ui/Loader";
-import { DisplayError } from "../../components/ui/DisplayError";
 import { Link, useSearchParams } from "react-router";
-import { REACT_QUERY_CONFIG } from "../../lib/constants/queryConfig";
 import { debounce } from "lodash";
 import { SafeRender } from "../../components/layout/SafeRender";
 
@@ -42,7 +38,6 @@ const Movies = () => {
   } = useInfiniteQuery({
     queryKey: ["movies", searchQuery],
     queryFn: fetchMovies,
-    ...REACT_QUERY_CONFIG.DEFAULT,
     getNextPageParam: (lastPage) =>
       lastPage.data.page < lastPage.data.total_pages
         ? lastPage.data.page + 1

@@ -9,6 +9,7 @@ const TextField = ({ field, register, error }) => {
   const passwordHandler = () => {
     setShowPassword(!showPassword);
   };
+  if (field.inputType == "number") field.type = "number";
   return (
     <div className="flex relative flex-col gap-2">
       <label htmlFor={field.id}>{field.label}</label>
@@ -75,7 +76,7 @@ const CheckboxField = ({ field, register, error }) => {
         id={field.id}
         type="checkbox"
         {...register(field.id)}
-        className={`w-4 h-4 border focus:outline-none focus:ring-1 focus:ring-black transition-all ${
+        className={`w-4 h-4 ${
           error ? "border-red-500 focus:ring-red-500" : "border-gray-300"
         }  duration-200 ${field.className}`}
       />
@@ -90,6 +91,7 @@ const CheckboxField = ({ field, register, error }) => {
 export function InputField({ field, register, error }) {
   const fieldFactory = {
     text: TextField,
+    number: TextField,
     radio: RadioField,
     checkbox: CheckboxField,
   };

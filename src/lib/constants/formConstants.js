@@ -70,7 +70,7 @@ export const SIGNUP_FIELDS_DATA = {
       id: "age",
       label: "Age: ",
       placeholder: "25",
-      inputType: "text",
+      inputType: "number",
     },
     {
       id: "TnC",
@@ -89,7 +89,7 @@ export const SIGNUP_FIELDS_DATA = {
     gender: z.enum(["male", "female", "other", "prefer_not_to_say"], {
       message: "Please select your gender",
     }),
-    age: z.string().min(1, { message: "Please enter a your age" }),
+    age: z.number({ message: "Please enter your age" }),
     TnC: z.boolean(),
   }),
 };

@@ -13,13 +13,10 @@ import StarIcon from "../../../assets/svgs/star.svg?react";
 import { IMAGES_BASE_URL } from "../../../lib/constants";
 import { MovieButton } from "../../../components/ui/MovieButton";
 import { Tag } from "../../../components/ui/Tag";
-import HeaderFooter from "../../../components/layout/HeaderFooter";
 import useFavouriteMoviesStore from "../../../app/favouriteMoviesStore";
 import { formatDate, formatRuntime, getStarRating } from "../../../lib/utils";
 import { useQuery } from "@tanstack/react-query";
-import { Loader } from "../../../components/ui/Loader";
-import { DisplayError } from "../../../components/ui/DisplayError";
-import { REACT_QUERY_CONFIG } from "../../../lib/constants/queryConfig";
+import { SafeRender } from "../../../components/layout/SafeRender";
 
 const MoviesDetail = () => {
   const { id } = useParams();
@@ -35,7 +32,6 @@ const MoviesDetail = () => {
   const { data, error, isLoading } = useQuery({
     queryKey: ["movies-detail", id],
     queryFn: fetchMovies,
-    ...REACT_QUERY_CONFIG.DEFAULT,
   });
   const movie = data?.data;
 
@@ -51,22 +47,8 @@ const MoviesDetail = () => {
     }
   };
 
-  if (error)
-    return (
-      <HeaderFooter>
-        <DisplayError errorMessage={error.message} cause={error?.cause} />
-      </HeaderFooter>
-    );
-
-  if (isLoading)
-    return (
-      <HeaderFooter>
-        <Loader />
-      </HeaderFooter>
-    );
-
   return (
-    <HeaderFooter>
+    <SafeRender error={error} isLoading={isLoading}>
       <div className="min-h-screen bg-gray-900 text-white">
         <div className="relative h-screen overflow-hidden">
           <div
@@ -259,7 +241,7 @@ const MoviesDetail = () => {
           </div>
         </div>
       </div>
-    </HeaderFooter>
+    </SafeRender>
   );
 };
 
