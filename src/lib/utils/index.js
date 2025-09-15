@@ -1,7 +1,4 @@
-export const getUser = () => {
-  const token = localStorage.getItem("token");
-  return Boolean(token);
-};
+import toast from "react-hot-toast";
 
 export const getStarRating = (rating) => {
   return (rating / 2).toFixed(1);
@@ -19,4 +16,13 @@ export const formatDate = (dateString) => {
     month: "long",
     day: "numeric",
   });
+};
+
+export const errorMessage = (err) => {
+  switch (err.response.status) {
+    case 401:
+      return toast.error("Invalid credentials.");
+    default:
+      return toast.error("An error occurred. Please try again later.");
+  }
 };
