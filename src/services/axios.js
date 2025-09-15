@@ -24,6 +24,11 @@ axiosInstance.interceptors.response.use(
     return response;
   },
   (error) => {
+    if (error.response?.status === 401) {
+      const removeToken = useAuthStore.getState().removeToken();
+      removeToken();
+      window.location.href = "/login";
+    }
     return Promise.reject(error);
   }
 );

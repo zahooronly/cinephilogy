@@ -3,7 +3,10 @@ export const REACT_QUERY_CONFIG = {
     staleTime: 60 * 1000,
     cacheTime: 5 * 60 * 1000,
     refetchOnWindowFocus: false,
-    retry: 1,
+    retry: 0,
+  },
+  PAGINATED: {
+    keepPreviousData: true,
   },
   STATIC: {
     staleTime: Infinity,

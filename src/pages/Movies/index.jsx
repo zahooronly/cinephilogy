@@ -1,81 +1,83 @@
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { MovieCard } from "../../components/layout/MovieCard";
 import { MoviesAPI } from "../../services/api";
-import { Pagination } from "../../components/layout/Pagination";
-import SearchIcon from "../../assets/svgs/search.svg?react";
-import HeaderFooter from "../../components/layout/HeaderFooter";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { Loader } from "../../components/ui/Loader";
-import { DisplayError } from "../../components/ui/DisplayError";
-import { Link } from "react-router";
-import { REACT_QUERY_CONFIG } from "../../lib/constants/queryConfig";
+import { Link, useSearchParams } from "react-router";
 import { debounce } from "lodash";
+import { SafeRender } from "../../components/layout/SafeRender";
+import { REACT_QUERY_CONFIG } from "../../lib/constants/queryConfig";
+import InfiniteScroll from "react-infinite-scroll-component";
+import { Loader } from "../../components/ui/Loader";
 
 const Movies = () => {
   const [searchQuery, setSearchQuery] = useState("");
-  const [debouncedSearch, setDebouncedSearch] = useState("");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const search = searchParams.get("search");
 
-  const debouncedSetSearch = useCallback(
+  useEffect(() => {
+    setSearchQuery(search);
+  }, []);
+
+  const updateSearch = useCallback(
     debounce((value) => {
-      setDebouncedSearch(value);
+      setSearchQuery(value);
+      value ? setSearchParams({ search: value }) : setSearchParams({});
     }, 500),
-    []
+    [setSearchParams]
   );
 
-  const handleSearchQuery = (e) => {
-    const value = e?.target?.value || "";
-    setSearchQuery(value);
-    debouncedSetSearch(value);
+  const handleSearchQuery = (e) => updateSearch(e.target.value);
+
+  const fetchMovies = async ({ pageParam = 1 }) => {
+    const getMovies = searchQuery
+      ? () => MoviesAPI.getSearchedMovies(searchQuery, pageParam)
+      : () => MoviesAPI.getAll(pageParam);
+    return await getMovies();
   };
 
-  const fetchMovies = async ({ queryKey, pageParam = 1 }) => {
-    const [_key] = queryKey;
-    return debouncedSearch
-      ? await MoviesAPI.getSearchedMovies(debouncedSearch)
-      : await MoviesAPI.getAll(pageParam);
-  };
+  const {
+    data,
+    error,
+    isLoading,
+    fetchNextPage,
+    isFetchingNextPage,
+    hasNextPage,
+  } = useInfiniteQuery({
+    queryKey: ["movies", searchQuery],
+    queryFn: fetchMovies,
+    getNextPageParam: (lastPage) =>
+      lastPage.data.page < lastPage.data.total_pages
+        ? lastPage.data.page + 1
+        : undefined,
+    ...REACT_QUERY_CONFIG.PAGINATED,
+  });
 
-  const { data, error, isLoading, fetchNextPage, isFetchingNextPage } =
-    useInfiniteQuery({
-      queryKey: ["movies", debouncedSearch],
-      queryFn: fetchMovies,
-      ...REACT_QUERY_CONFIG.DEFAULT,
-      getNextPageParam: (lastPage) => {
-        return lastPage.data.page <= lastPage.data.total_pages
-          ? lastPage.data.page + 1
-          : undefined;
-      },
-      staleTime: 1000 * 60 * 5,
-      keepPreviousData: true,
-    });
-  const movies = useMemo(() => {
-    return data?.pages?.flatMap((page) => page.data.results);
-  }, [data]);
-
-  if (error)
-    return (
-      <HeaderFooter>
-        <DisplayError errorMessage={error.message} cause={error?.cause} />
-      </HeaderFooter>
-    );
+  const movies = useMemo(
+    () => data?.pages?.flatMap((page) => page.data.results) || [],
+    [data]
+  );
 
   return (
-    <HeaderFooter>
-      <div className="my-[74px] px-4 sm:px-6 md:px-8">
-        <div className="flex justify-end items-center my-4 relative">
-          <input
-            type="text"
-            placeholder="Search for a movie"
-            value={searchQuery}
-            onChange={handleSearchQuery}
-            className="px-4 py-2 border border-gray-700 w-md focus:border-black hover:border-gray-900 transition-colors duration-200 
-          bg-white text-gray-900 placeholder-gray-500
-          focus:outline-none focus:ring-2 focus:ring-gray-800"
-          />
-          <SearchIcon className="absolute w-5 h-5 right-2" />
-        </div>
-        <div className="flex gap-5 flex-wrap justify-center items-center">
-          {isLoading && <Loader />}
+    <SafeRender
+      error={error}
+      isLoading={isLoading}
+      handleSearchQuery={handleSearchQuery}
+      searchQuery={search}
+    >
+      <InfiniteScroll
+        dataLength={movies.length}
+        next={fetchNextPage}
+        hasMore={!!hasNextPage}
+        loader={isFetchingNextPage ? <Loader /> : null}
+        endMessage={
+          !hasNextPage && (
+            <p className="text-center text-gray-400 mt-4">
+              You have reached the end 🎬
+            </p>
+          )
+        }
+      >
+        <div className="flex gap-5 py-8 flex-wrap justify-center items-center">
           {movies?.length !== 0 ? (
             movies
               ?.filter((movie) => movie.poster_path)
@@ -93,16 +95,8 @@ const Movies = () => {
             </div>
           )}
         </div>
-        {searchQuery.length === 0 && (
-          <Pagination
-            onClick={() => fetchNextPage()}
-            disabled={isFetchingNextPage}
-            isLoading={isFetchingNextPage}
-            title={isFetchingNextPage ? "Loading..." : "Load More"}
-          />
-        )}
-      </div>
-    </HeaderFooter>
+      </InfiniteScroll>
+    </SafeRender>
   );
 };
 
