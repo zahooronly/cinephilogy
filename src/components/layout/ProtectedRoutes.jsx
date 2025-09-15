@@ -1,9 +1,9 @@
 import { Navigate } from "react-router";
-import { useAuth } from "../../hooks/useAuthHooks";
+import { useToken } from "../../hooks/useToken";
 
 export const ProtectedRoutes = ({ children }) => {
-  const isAuthenticated = useAuth();
-  if (!isAuthenticated) {
+  const token = useToken();
+  if (!token) {
     return <Navigate to="/login" replace />;
   }
   return children;

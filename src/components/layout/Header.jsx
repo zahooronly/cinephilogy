@@ -3,11 +3,11 @@ import { Link, NavLink } from "react-router";
 import { Button } from "../ui/Button";
 import { useLogout } from "../../hooks/useLogout";
 import { NAVIVATION_LINKS } from "../../lib/constants/routesConstants";
-import { useAuth } from "../../hooks/useAuthHooks";
+import { useToken } from "../../hooks/useToken";
 
 export const Header = () => {
   const logout = useLogout();
-  const user = useAuth();
+  const token = useToken();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -61,7 +61,7 @@ export const Header = () => {
         </ul>
       </div>
       <div className="hidden md:flex items-center space-x-6">
-        {!user ? (
+        {!token ? (
           <>
             <Link to="/login">
               <Button>Login</Button>
@@ -91,7 +91,7 @@ export const Header = () => {
           </ul>
           <div className="mt-6 space-y-4">
             <div className="pt-2">
-              {!user ? (
+              {!token ? (
                 <>
                   <Link to="/login">
                     <Button>Login</Button>

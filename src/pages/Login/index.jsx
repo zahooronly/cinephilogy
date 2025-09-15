@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { AuthWrapper } from "../../components/layout/AuthWrapper";
 import { Button } from "../../components/ui/Button";
 import { useNavigate } from "react-router";
@@ -8,7 +7,6 @@ import HeaderFooter from "../../components/layout/HeaderFooter";
 import useAuthStore from "../../app/authStore";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
-import { useAuth } from "../../hooks/useAuthHooks";
 import { errorMessage } from "../../lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { InputField } from "../../components/layout/InputField";
@@ -22,18 +20,11 @@ const Login = () => {
   } = useForm({
     resolver: zodResolver(LOGIN_FIELDS_DATA.schema),
   });
-  const originalToken = import.meta.env.VITE_ACCESS_TOKEN;
 
   const navigate = useNavigate();
-  const user = useAuth();
 
   const addToken = useAuthStore((state) => state.addToken);
-  const removeToken = useAuthStore((state) => state.removeToken);
 
-  useEffect(() => {
-    if (user === originalToken) navigate("/", { replace: true });
-    else removeToken();
-  }, [user, navigate, originalToken, removeToken]);
   const { mutate, isPending } = useMutation({
     mutationFn: async (payload) => await AuthAPI.login(payload),
     onSuccess: () => {

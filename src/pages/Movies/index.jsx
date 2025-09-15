@@ -7,6 +7,7 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { Link, useSearchParams } from "react-router";
 import { debounce } from "lodash";
 import { SafeRender } from "../../components/layout/SafeRender";
+import { REACT_QUERY_CONFIG } from "../../lib/constants/queryConfig";
 
 const Movies = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -21,10 +22,9 @@ const Movies = () => {
 
   const handleSearchQuery = (e) => updateSearch(e.target.value);
 
-  const fetchMovies = async ({ queryKey, pageParam = 1 }) => {
-    const [_key, searchTerm] = queryKey;
-    return searchTerm
-      ? await MoviesAPI.getSearchedMovies(searchTerm)
+  const fetchMovies = async ({ pageParam = 1 }) => {
+    return searchQuery
+      ? await MoviesAPI.getSearchedMovies(searchQuery)
       : await MoviesAPI.getAll(pageParam);
   };
 
@@ -42,8 +42,7 @@ const Movies = () => {
       lastPage.data.page < lastPage.data.total_pages
         ? lastPage.data.page + 1
         : undefined,
-    staleTime: 1000 * 60 * 5,
-    keepPreviousData: true,
+    ...REACT_QUERY_CONFIG.PAGINATED,
   });
 
   const movies = useMemo(

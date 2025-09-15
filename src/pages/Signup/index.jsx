@@ -1,11 +1,7 @@
-import { useEffect } from "react";
 import { AuthWrapper } from "../../components/layout/AuthWrapper";
 import { Button } from "../../components/ui/Button";
-import { useNavigate } from "react-router";
 import HeaderFooter from "../../components/layout/HeaderFooter";
-import useAuthStore from "../../app/authStore";
 import { useForm } from "react-hook-form";
-import { useAuth } from "../../hooks/useAuthHooks";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { InputField } from "../../components/layout/InputField";
 import { SIGNUP_FIELDS_DATA } from "../../lib/constants/formConstants";
@@ -18,18 +14,6 @@ const Signup = () => {
   } = useForm({
     resolver: zodResolver(SIGNUP_FIELDS_DATA.schema),
   });
-
-
-  const originalToken = import.meta.env.VITE_ACCESS_TOKEN;
-
-  const navigate = useNavigate();
-  const user = useAuth();
-
-  const removeToken = useAuthStore((state) => state.removeToken);
-  useEffect(() => {
-    if (user === originalToken) navigate("/", { replace: true });
-    else removeToken();
-  }, [user, navigate, originalToken, removeToken]);
 
   const submitHandler = (signupPayload) =>
     console.log("User Info: ", signupPayload);

@@ -73,7 +73,7 @@ export const SIGNUP_FIELDS_DATA = {
       inputType: "number",
     },
     {
-      id: "TnC",
+      id: "termsAndConditions ",
       label: "Accept all terms and conditions",
       inputType: "checkbox",
     },
@@ -90,6 +90,6 @@ export const SIGNUP_FIELDS_DATA = {
       message: "Please select your gender",
     }),
     age: z.number({ message: "Please enter your age" }),
-    TnC: z.boolean(),
+    termsAndConditions: z.boolean(),
   }),
 };

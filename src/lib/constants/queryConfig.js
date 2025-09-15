@@ -5,6 +5,9 @@ export const REACT_QUERY_CONFIG = {
     refetchOnWindowFocus: false,
     retry: 0,
   },
+  PAGINATED: {
+    keepPreviousData: true,
+  },
   STATIC: {
     staleTime: Infinity,
     cacheTime: Infinity,
