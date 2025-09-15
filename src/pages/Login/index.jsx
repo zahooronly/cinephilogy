@@ -49,7 +49,7 @@ const Login = () => {
                   key={input.id}
                   field={input}
                   register={register}
-                  error={errors[input.id]}
+                  errorMessage={errors[input.id]?.message}
                 />
               );
             })}

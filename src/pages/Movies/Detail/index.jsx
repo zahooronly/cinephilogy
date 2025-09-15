@@ -23,9 +23,7 @@ const MoviesDetail = () => {
   const { addFavourite, removeFavourite, favouriteMovies } =
     useFavouriteMoviesStore();
 
-  const fetchMovies = async ({ queryKey }) => {
-    const [_key] = queryKey;
-
+  const fetchMovies = async () => {
     return await MoviesAPI.getMovieDetail(Number(id));
   };
 
@@ -41,7 +39,7 @@ const MoviesDetail = () => {
 
   const handleFavourite = (movie) => () => {
     if (isFavourite) {
-      removeFavourite(movie.id);
+      removeFavourite(movie?.id);
     } else {
       addFavourite(movie);
     }
@@ -54,7 +52,7 @@ const MoviesDetail = () => {
           <div
             className="absolute inset-0 bg-cover bg-center bg-no-repeat"
             style={{
-              backgroundImage: `url(${`https://image.tmdb.org/t/p/original${movie.backdrop_path}`})`,
+              backgroundImage: `url(${`https://image.tmdb.org/t/p/original${movie?.backdrop_path}`})`,
             }}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent" />
@@ -71,25 +69,25 @@ const MoviesDetail = () => {
             <div className="flex flex-col lg:flex-row items-center lg:items-end space-y-8 lg:space-y-0 lg:space-x-12 w-full">
               <div className="flex-shrink-0 transform hover:scale-105 transition-transform duration-300">
                 <img
-                  src={`${IMAGES_BASE_URL}${movie.poster_path}`}
-                  alt={movie.title}
+                  src={`${IMAGES_BASE_URL}${movie?.poster_path}`}
+                  alt={movie?.title}
                   className="w-80 h-auto rounded-2xl shadow-2xl"
                 />
               </div>
 
               <div className="flex-1 max-w-3xl text-center lg:text-left">
-                {movie.tagline && (
+                {movie?.tagline && (
                   <p className="text-white/80 text-lg font-medium mb-4 italic">
-                    "{movie.tagline}"
+                    "{movie?.tagline}"
                   </p>
                 )}
 
                 <h1 className="text-5xl lg:text-7xl font-bold mb-6 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
-                  {movie.title}
+                  {movie?.title}
                 </h1>
 
                 <div className="flex flex-wrap justify-center lg:justify-start gap-3 mb-6">
-                  {movie.genres?.map((genre) => (
+                  {movie?.genres?.map((genre) => (
                     <Tag key={genre.id} title={genre.name} />
                   ))}
                 </div>
@@ -98,16 +96,16 @@ const MoviesDetail = () => {
                   <div className="flex items-center space-x-2">
                     <StarIcon className="w-5 h-5 text-yellow-400 fill-current" />
                     <span className="font-semibold">
-                      {getStarRating(movie.vote_average)}
+                      {getStarRating(movie?.vote_average)}
                     </span>
                     <span className="text-sm">
-                      ({movie.vote_count} reviews)
+                      ({movie?.vote_count} reviews)
                     </span>
                   </div>
 
                   <div className="flex items-center space-x-2">
                     <CalendarIcon className="w-5 h-5" />
-                    <span>{formatDate(movie.release_date)}</span>
+                    <span>{formatDate(movie?.release_date)}</span>
                   </div>
 
                   <div className="flex items-center space-x-2">
@@ -117,13 +115,13 @@ const MoviesDetail = () => {
 
                   <div className="flex items-center space-x-2">
                     <GlobeIcon className="w-5 h-5" />
-                    <span>{movie.origin_country?.[0]}</span>
+                    <span>{movie?.origin_country?.[0]}</span>
                   </div>
                 </div>
 
                 <div className="flex flex-wrap justify-center lg:justify-start gap-4 mb-8">
                   <Link
-                    to={movie.homepage}
+                    to={movie?.homepage}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
@@ -169,7 +167,7 @@ const MoviesDetail = () => {
                   Plot Summary
                 </h2>
                 <p className="text-lg text-gray-300 leading-relaxed mb-8">
-                  {movie.overview}
+                  {movie?.overview}
                 </p>
               </div>
 
@@ -181,39 +179,39 @@ const MoviesDetail = () => {
                   <div className="space-y-3 text-gray-300">
                     <div className="flex justify-between">
                       <span className="text-gray-400">Status:</span>
-                      <span>{movie.status}</span>
+                      <span>{movie?.status}</span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-gray-400">Original Language:</span>
                       <span className="capitalize">
-                        {movie.original_language}
+                        {movie?.original_language}
                       </span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-gray-400">Popularity:</span>
-                      <span>{movie.popularity?.toFixed(1)}</span>
+                      <span>{movie?.popularity?.toFixed(1)}</span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-gray-400">IMDB ID:</span>
                       <Link
-                        to={`https://www.imdb.com/title/${movie.imdb_id}`}
+                        to={`https://www.imdb.com/title/${movie?.imdb_id}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-white hover:text-gray-300 transition-colors underline"
                       >
-                        {movie.imdb_id}
+                        {movie?.imdb_id}
                       </Link>
                     </div>
                   </div>
                 </div>
 
-                {movie.production_companies?.length > 0 && (
+                {movie?.production_companies?.length > 0 && (
                   <div>
                     <h3 className="text-xl font-bold mb-4 text-white">
                       Production
                     </h3>
                     <div className="space-y-2">
-                      {movie.production_companies.map((company) => (
+                      {movie?.production_companies.map((company) => (
                         <div key={company.id} className="text-gray-300">
                           {company.name}
                         </div>
@@ -222,13 +220,13 @@ const MoviesDetail = () => {
                   </div>
                 )}
 
-                {movie.spoken_languages?.length > 0 && (
+                {movie?.spoken_languages?.length > 0 && (
                   <div>
                     <h3 className="text-xl font-bold mb-4 text-white">
                       Languages
                     </h3>
                     <div className="space-y-2">
-                      {movie.spoken_languages.map((lang, index) => (
+                      {movie?.spoken_languages.map((lang, index) => (
                         <div key={index} className="text-gray-300">
                           {lang.english_name}
                         </div>
