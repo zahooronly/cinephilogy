@@ -11,7 +11,7 @@ import { AuthRoutes } from "../../components/layout/AuthRoutes";
 export const ROUTE_PATHS = {
   HOME: "/",
   MOVIES: "/movies",
-  FAVORITES: "/favorites",
+  FAVORITES: "/favourite",
   LOGIN: "/login",
   SIGNUP: "/signup",
 };
@@ -20,7 +20,6 @@ export const NAVIGATION_LINKS = [
   { title: "Movies", url: ROUTE_PATHS.MOVIES },
   { title: "Favourite", url: ROUTE_PATHS.FAVORITES },
 ];
-
 
 export const ROUTES_CONFIG = [
   {
