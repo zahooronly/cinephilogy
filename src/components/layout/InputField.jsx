@@ -62,7 +62,7 @@ const RadioField = ({ field, register, errorMessage }) => {
           </label>
         ))}
       </div>
-      <div>{errorMessage && <ErrorMessage message={errorMessage} />}</div>
+      {errorMessage && <ErrorMessage message={errorMessage} />}
     </div>
   );
 };
