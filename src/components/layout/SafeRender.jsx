@@ -7,16 +7,13 @@ export const SafeRender = ({
   error,
   isLoading,
   children,
-  handleSearchQuery,
-  searchQuery,
+  handleSearch,
+  search,
 }) => {
   return (
     <HeaderFooter>
       <div className="my-[74px] px-4 sm:px-6 md:px-8">
-        <Search
-          handleSearchQuery={handleSearchQuery}
-          searchQuery={searchQuery}
-        />
+        <Search handleSearch={handleSearch} search={search} />
       </div>
 
       {error ? (

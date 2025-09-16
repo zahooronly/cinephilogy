@@ -1,5 +1,6 @@
 import { Link } from "react-router";
 import { Button } from "../../components/ui/Button";
+import { ROUTE_PATHS } from "../../lib/constants/routesConstants";
 
 const NotFound = () => {
   return (
@@ -9,7 +10,7 @@ const NotFound = () => {
         <p className="mt-4 text-lg">
           The page you are looking for does not exist.
         </p>
-        <Link to="/" className="mt-6 inline-block">
+        <Link to={ROUTE_PATHS.HOME} className="mt-6 inline-block">
           <Button>Go to Home</Button>
         </Link>
       </div>

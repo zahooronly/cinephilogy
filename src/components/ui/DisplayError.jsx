@@ -1,3 +1,4 @@
+import { ROUTE_PATHS } from "../../lib/constants/routesConstants";
 import { Button } from "./Button";
 import { Link } from "react-router";
 
@@ -11,7 +12,7 @@ export const DisplayError = ({ errorMessage, cause }) => {
           <span className="italic text-red-500">{cause}</span>
         </p>
       )}
-      <Link to="/">
+      <Link to={ROUTE_PATHS.HOME}>
         <Button>Go home</Button>
       </Link>
     </div>

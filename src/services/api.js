@@ -3,14 +3,14 @@ import axiosInstance from "./axios";
 import { AUTH_API_URL } from "../lib/constants";
 
 export const MoviesAPI = {
-  getAll: (page) => {
+  getAll: (params) => {
     return axiosInstance.get("/discover/movie", {
       params: {
         include_adult: false,
         include_video: false,
         language: "en-US",
         sort_by: "popularity.desc",
-        page: page,
+        ...params,
       },
     });
   },
@@ -21,13 +21,13 @@ export const MoviesAPI = {
       },
     });
   },
-  getSearchedMovies: (query, page) => {
+  getSearchedMovies: (params) => {
     return axiosInstance.get(`/search/movie`, {
       params: {
         include_adult: false,
+        include_video: false,
         language: "en-US",
-        query: query,
-        page: page,
+        ...params,
       },
     });
   },

@@ -15,6 +15,7 @@ const Signup = () => {
     resolver: zodResolver(SIGNUP_FIELDS_DATA.schema),
   });
 
+
   const submitHandler = (signupPayload) =>
     console.log("User Info: ", signupPayload);
 

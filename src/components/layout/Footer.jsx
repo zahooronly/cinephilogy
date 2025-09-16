@@ -1,8 +1,9 @@
 import { Link } from "react-router";
 import {
+  ROUTE_PATHS,
   GENRES,
   LEGAL,
-  NAVIVATION_LINKS,
+  NAVIGATION_LINKS,
 } from "../../lib/constants/routesConstants";
 import FacebookIcon from "../../assets/svgs/facebook.svg?react";
 import InstagramIcon from "../../assets/svgs/instagram.svg?react";
@@ -17,7 +18,7 @@ export const Footer = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-8">
           <div className="mb-6 sm:mb-0">
-            <Link to="/">
+            <Link to={ROUTE_PATHS.HOME}>
               <div className="text-2xl sm:text-3xl font-extrabold -tracking-wider select-none cursor-pointer hover:text-gray-300 transition-colors uppercase mb-4">
                 Cine.
               </div>
@@ -64,7 +65,7 @@ export const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold mb-3">Navigation</h3>
             <ul className="space-y-2">
-              {NAVIVATION_LINKS.map((link) => (
+              {NAVIGATION_LINKS.map((link) => (
                 <li key={link.url}>
                   <Link
                     to={link.url}

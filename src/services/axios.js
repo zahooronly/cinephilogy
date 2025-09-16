@@ -1,6 +1,7 @@
 import axios from "axios";
 import { BASE_URL } from "../lib/constants";
 import useAuthStore from "../app/authStore";
+import { ROUTE_PATHS } from "../lib/constants/routesConstants";
 
 const axiosInstance = axios.create({
   baseURL: BASE_URL,
@@ -25,9 +26,9 @@ axiosInstance.interceptors.response.use(
   },
   (error) => {
     if (error.response?.status === 401) {
-      const removeToken = useAuthStore.getState().removeToken();
-      removeToken();
-      window.location.href = "/login";
+      const deleteToken = useAuthStore.getState().deleteToken();
+      deleteToken();
+      window.location.href = ROUTE_PATHS.LOGIN;
     }
     return Promise.reject(error);
   }

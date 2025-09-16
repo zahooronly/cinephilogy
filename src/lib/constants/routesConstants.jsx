@@ -6,22 +6,39 @@ import NotFound from "../../pages/404";
 import MoviesDetail from "../../pages/Movies/Detail";
 import MoviesLayout from "../../components/layout/MoviesLayout";
 import Signup from "../../pages/Signup";
+import { AuthRoutes } from "../../components/layout/AuthRoutes";
 
-export const NAVIVATION_LINKS = [
-  { title: "Home", url: "/" },
-  { title: "Movies", url: "/movies" },
-  { title: "Favourite", url: "/favourite" },
+export const ROUTE_PATHS = {
+  HOME: "/",
+  MOVIES: "/movies",
+  FAVORITES: "/favorites",
+  LOGIN: "/login",
+  SIGNUP: "/signup",
+};
+export const NAVIGATION_LINKS = [
+  { title: "Home", url: ROUTE_PATHS.HOME },
+  { title: "Movies", url: ROUTE_PATHS.MOVIES },
+  { title: "Favourite", url: ROUTE_PATHS.FAVORITES },
 ];
+
 
 export const ROUTES_CONFIG = [
   {
     path: "login",
-    element: <Login />,
+    element: (
+      <AuthRoutes>
+        <Login />
+      </AuthRoutes>
+    ),
     isProtected: false,
   },
   {
     path: "signup",
-    element: <Signup />,
+    element: (
+      <AuthRoutes>
+        <Signup />
+      </AuthRoutes>
+    ),
     isProtected: false,
   },
   {

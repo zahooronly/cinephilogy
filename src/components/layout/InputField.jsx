@@ -1,14 +1,16 @@
 import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 
-const TextField = ({ field, register, errorMessage: errorMessage }) => {
+const ErrorMessage = ({ message }) => (
+  <p className="text-red-500 text-sm font-medium">{message}</p>
+);
+
+const TextField = ({ field, register, errorMessage }) => {
   const [showPassword, setShowPassword] = useState(false);
-  if (field.id == "password") {
-    field.type = showPassword ? "text" : "password";
-  }
-  const passwordHandler = () => {
-    setShowPassword(!showPassword);
-  };
+  if (field.id == "password") field.type = showPassword ? "text" : "password";
+
+  const passwordHandler = () => setShowPassword(!showPassword);
+
   if (field.inputType == "number") field.type = "number";
   return (
     <div className="flex relative flex-col gap-2">
@@ -30,9 +32,7 @@ const TextField = ({ field, register, errorMessage: errorMessage }) => {
           {showPassword ? <Eye /> : <EyeOff />}
         </span>
       )}
-      {errorMessage && (
-        <p className="text-red-500 text-sm font-medium">{errorMessage}</p>
-      )}
+      {errorMessage && <ErrorMessage message={errorMessage} />}
     </div>
   );
 };
@@ -62,11 +62,7 @@ const RadioField = ({ field, register, errorMessage }) => {
           </label>
         ))}
       </div>
-      <div>
-        {errorMessage && (
-          <p className="text-red-500 text-sm font-medium">{errorMessage}</p>
-        )}
-      </div>
+      <div>{errorMessage && <ErrorMessage message={errorMessage} />}</div>
     </div>
   );
 };
@@ -83,9 +79,7 @@ const CheckboxField = ({ field, register, errorMessage }) => {
         }  duration-200 ${field.className}`}
       />
       <label htmlFor={field.id}>{field.label}</label>
-      {errorMessage && (
-        <p className="text-red-500 text-sm font-medium">{errorMessage}</p>
-      )}
+      {errorMessage && <ErrorMessage message={errorMessage} />}
     </div>
   );
 };
@@ -97,16 +91,17 @@ export function InputField({ field, register, errorMessage }) {
     radio: RadioField,
     checkbox: CheckboxField,
   };
-  const props = {
-    field,
-    register,
-    errorMessage,
-  };
 
   const InputFieldComponent = fieldFactory[field.inputType];
   if (!InputFieldComponent) {
     return <p className="text-red-500">Unsupported field type: {field.type}</p>;
   }
 
-  return <InputFieldComponent {...props} />;
+  return (
+    <InputFieldComponent
+      field={field}
+      register={register}
+      errorMessage={errorMessage}
+    />
+  );
 }

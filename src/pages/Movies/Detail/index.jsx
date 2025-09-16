@@ -23,9 +23,7 @@ const MoviesDetail = () => {
   const { addFavourite, removeFavourite, favouriteMovies } =
     useFavouriteMoviesStore();
 
-  const fetchMovies = async () => {
-    return await MoviesAPI.getMovieDetail(Number(id));
-  };
+  const fetchMovies = async () => await MoviesAPI.getMovieDetail(Number(id));
 
   const { data, error, isLoading } = useQuery({
     queryKey: ["movies-detail", id],
