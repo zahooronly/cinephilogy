@@ -16,16 +16,14 @@ export const useFavouriteHandler = (movie) => {
     }
   };
 
-  const handleClick = (e) => {
-    if (e) {
-      e.preventDefault();
-      e.stopPropagation();
-    }
+  const handleToggleFavouritesClick = (e) => {
+    e?.preventDefault();
+    e?.stopPropagation();
     toggleFavourite();
   };
 
   return {
     isFavourite,
-    handleClick,
+    handleToggleFavouritesClick,
   };
 };

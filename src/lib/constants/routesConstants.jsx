@@ -6,7 +6,6 @@ import NotFound from "../../pages/404";
 import MoviesDetail from "../../pages/Movies/Detail";
 import MoviesLayout from "../../components/layout/MoviesLayout";
 import Signup from "../../pages/Signup";
-import { AuthRoutes } from "../../components/layout/AuthRoutes";
 
 export const ROUTE_PATHS = {
   HOME: "/",
@@ -24,21 +23,13 @@ export const NAVIGATION_LINKS = [
 export const ROUTES_CONFIG = [
   {
     path: "login",
-    element: (
-      <AuthRoutes>
-        <Login />
-      </AuthRoutes>
-    ),
-    isProtected: false,
+    element: <Login />,
+    isAuthRoute: true,
   },
   {
     path: "signup",
-    element: (
-      <AuthRoutes>
-        <Signup />
-      </AuthRoutes>
-    ),
-    isProtected: false,
+    element: <Signup />,
+    isAuthRoute: true,
   },
   {
     index: true,

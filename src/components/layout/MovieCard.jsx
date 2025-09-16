@@ -8,7 +8,8 @@ import { useFavouriteHandler } from "../../hooks/useFavouriteHandler";
 
 export const MovieCard = ({ movie }) => {
   const [isHovered, setIsHovered] = useState(false);
-  const { isFavourite, handleClick } = useFavouriteHandler(movie);
+  const { isFavourite, handleToggleFavouritesClick } =
+    useFavouriteHandler(movie);
 
   return (
     <div
@@ -50,7 +51,7 @@ export const MovieCard = ({ movie }) => {
           <div className="absolute rounded-xl inset-0 bg-gradient-to-t from-black via-black/90 to-black/70 flex flex-col justify-between p-3 sm:p-4 md:p-5 lg:p-6 transition-all duration-300">
             <div
               className="p-1.5 max-w-8 w-full rounded-full backdrop-blur-sm cursor-pointer transition-colors duration-200"
-              onClick={handleClick}
+              onClick={handleToggleFavouritesClick}
             >
               <Heart
                 className={`w-4 h-4 sm:w-5 sm:h-5 ${

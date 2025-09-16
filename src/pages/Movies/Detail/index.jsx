@@ -28,7 +28,7 @@ const MoviesDetail = () => {
     queryFn: fetchMovies,
   });
   const movie = data?.data;
-  const { isFavourite, handleClick } = useFavouriteHandler(movie);
+  const { isFavourite, handleToggleFavouritesClick } = useFavouriteHandler(movie);
 
   return (
     <SafeRender error={error} isLoading={isLoading}>
@@ -117,7 +117,7 @@ const MoviesDetail = () => {
                   </Link>
 
                   <button
-                    onClick={handleClick}
+                    onClick={handleToggleFavouritesClick}
                     className="flex items-center space-x-3 backdrop-blur-sm border px-6 py-4 rounded-xl font-semibold transition-all duration-300 cursor-pointer bg-white/10 border-white/20 hover:bg-white/20"
                   >
                     <HeartIcon

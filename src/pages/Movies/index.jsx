@@ -29,8 +29,8 @@ const Movies = () => {
   const handleSearch = (e) => updateSearch(e.target.value);
   const fetchMovies = async ({ pageParam = 1 }) => {
     const movieSearchParams = {
-      query: search,
       page: pageParam,
+      ...(search && { query: search }),
     };
     const getMovies = search
       ? () => MoviesAPI.getSearchedMovies(movieSearchParams)
