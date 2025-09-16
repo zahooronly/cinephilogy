@@ -1,6 +1,5 @@
 import { AuthWrapper } from "../../components/layout/AuthWrapper";
 import { Button } from "../../components/ui/Button";
-import { useNavigate } from "react-router";
 import { AuthAPI } from "../../services/api";
 import { TOKEN } from "../../lib/constants";
 import HeaderFooter from "../../components/layout/HeaderFooter";
@@ -20,16 +19,12 @@ const Login = () => {
   } = useForm({
     resolver: zodResolver(LOGIN_FIELDS_DATA.schema),
   });
-
-  const navigate = useNavigate();
-
-  const addToken = useAuthStore((state) => state.addToken);
+  const setToken = useAuthStore((state) => state.setToken);
 
   const { mutate, isPending } = useMutation({
     mutationFn: async (payload) => await AuthAPI.login(payload),
     onSuccess: () => {
-      addToken(TOKEN);
-      navigate("/");
+      setToken(TOKEN);
     },
     onError: (err) => errorMessage(err),
   });

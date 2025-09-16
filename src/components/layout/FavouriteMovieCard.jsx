@@ -5,16 +5,15 @@ import { Tag } from "../ui/Tag";
 import useFavouriteMoviesStore from "../../app/favouriteMoviesStore";
 import { formatRuntime } from "../../lib/utils";
 import { IMAGES_BASE_URL } from "../../lib/constants";
-import toast from "react-hot-toast";
 
 export const FavouriteMovieCard = ({ movie }) => {
   const [isHovered, setIsHovered] = useState(false);
   const { removeFavourite } = useFavouriteMoviesStore();
+
   const handleRemoveFavoriteClick = (e) => {
     e.preventDefault();
     e.stopPropagation();
     removeFavourite(movie.id);
-    toast.success("Removed from favourites!");
   };
 
   return (

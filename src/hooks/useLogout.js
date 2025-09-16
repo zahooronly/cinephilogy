@@ -1,13 +1,14 @@
 import { replace, useNavigate } from "react-router";
 import useAuthStore from "../app/authStore";
+import { ROUTE_PATHS } from "../lib/constants/routesConstants";
 
 export const useLogout = () => {
   const navigate = useNavigate();
-  const removeToken = useAuthStore((state) => state.removeToken);
+  const deleteToken = useAuthStore((state) => state.deleteToken);
 
   const logout = () => {
-    removeToken("token");
-    navigate("/login", replace);
+    deleteToken();
+    navigate(ROUTE_PATHS.LOGIN, replace);
   };
   return logout;
 };

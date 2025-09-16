@@ -2,12 +2,15 @@ import { useState } from "react";
 import { Link, NavLink } from "react-router";
 import { Button } from "../ui/Button";
 import { useLogout } from "../../hooks/useLogout";
-import { NAVIVATION_LINKS } from "../../lib/constants/routesConstants";
-import { useToken } from "../../hooks/useToken";
+import {
+  ROUTE_PATHS,
+  NAVIGATION_LINKS,
+} from "../../lib/constants/routesConstants";
+import useAuthStore from "../../app/authStore";
 
 export const Header = () => {
   const logout = useLogout();
-  const token = useToken();
+  const token = useAuthStore((state) => state.token);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -16,7 +19,7 @@ export const Header = () => {
 
   return (
     <nav className="bg-white text-black px-4 md:px-8 py-4 flex items-center justify-between fixed w-full top-0 z-50">
-      <Link to="/">
+      <Link to={ROUTE_PATHS.HOME}>
         <div className="text-3xl font-extrabold -tracking-wider select-none cursor-pointer hover:text-gray-800 transition-colors uppercase">
           Cine.
         </div>
@@ -48,7 +51,7 @@ export const Header = () => {
 
       <div className="hidden md:block flex-1 mx-12">
         <ul className="flex justify-center space-x-8">
-          {NAVIVATION_LINKS.map((genre) => (
+          {NAVIGATION_LINKS.map((genre) => (
             <NavLink
               to={genre.url}
               key={genre.url}
@@ -63,10 +66,10 @@ export const Header = () => {
       <div className="hidden md:flex items-center space-x-6">
         {!token ? (
           <>
-            <Link to="/login">
+            <Link to={ROUTE_PATHS.LOGIN}>
               <Button>Login</Button>
             </Link>
-            <Link to="/signup">
+            <Link to={ROUTE_PATHS.SIGNUP}>
               <Button>Signup</Button>
             </Link>
           </>
@@ -77,7 +80,7 @@ export const Header = () => {
       {isMenuOpen && (
         <div className="md:hidden absolute top-full left-0 right-0 bg-white shadow-lg py-4 px-6 z-50">
           <ul className="flex flex-col space-y-4">
-            {NAVIVATION_LINKS.map((link) => (
+            {NAVIGATION_LINKS.map((link) => (
               <li key={link.url}>
                 <NavLink
                   to={link.url}
@@ -93,10 +96,10 @@ export const Header = () => {
             <div className="pt-2">
               {!token ? (
                 <>
-                  <Link to="/login">
+                  <Link to={ROUTE_PATHS.LOGIN}>
                     <Button>Login</Button>
                   </Link>
-                  <Link to="/signup">
+                  <Link to={ROUTE_PATHS.SIGNUP}>
                     <Button>Signup</Button>
                   </Link>
                 </>

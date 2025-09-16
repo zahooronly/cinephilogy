@@ -3,10 +3,10 @@ import { persist } from "zustand/middleware";
 
 const authStore = (set) => ({
   token: null,
-  addToken: (tkn) => {
+  setToken: (tkn) => {
     set(() => ({ token: tkn }));
   },
-  removeToken: () => {
+  deleteToken: () => {
     set(() => ({ token: null }));
   },
 });
