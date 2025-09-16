@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { persist, devtools } from "zustand/middleware";
+import { persist } from "zustand/middleware";
 
 const favouriteMoviesStore = (set) => ({
   favouriteMovies: [],
@@ -16,6 +16,6 @@ const favouriteMoviesStore = (set) => ({
 });
 
 const useFavouriteMoviesStore = create(
-  devtools(persist(favouriteMoviesStore, { name: "favouriteMovies" }))
+  persist(favouriteMoviesStore, { name: "favouriteMovies" })
 );
 export default useFavouriteMoviesStore;
