@@ -8,7 +8,6 @@ import { useFavouriteHandler } from "../../hooks/useFavouriteHandler";
 
 export const MovieCard = ({ movie }) => {
   const [isHovered, setIsHovered] = useState(false);
-
   const { isFavourite, handleClick } = useFavouriteHandler(movie);
 
   return (

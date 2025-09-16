@@ -13,7 +13,6 @@ import StarIcon from "../../../assets/svgs/star.svg?react";
 import { IMAGES_BASE_URL } from "../../../lib/constants";
 import { MovieButton } from "../../../components/ui/MovieButton";
 import { Tag } from "../../../components/ui/Tag";
-// import useFavouriteMoviesStore from "../../../app/favouriteMoviesStore";
 import { formatDate, formatRuntime, getStarRating } from "../../../lib/utils";
 import { useQuery } from "@tanstack/react-query";
 import { SafeRender } from "../../../components/layout/SafeRender";
@@ -21,10 +20,6 @@ import { useFavouriteHandler } from "../../../hooks/useFavouriteHandler";
 
 const MoviesDetail = () => {
   const { id } = useParams();
-  // const { addFavourite, removeFavourite } = useFavouriteMoviesStore();
-  // const favouriteMovies = useFavouriteMoviesStore(
-  //   (state) => state.favouriteMovies
-  // );
 
   const fetchMovies = async () => await MoviesAPI.getMovieDetail(Number(id));
 
