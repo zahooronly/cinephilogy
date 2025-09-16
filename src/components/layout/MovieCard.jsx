@@ -3,23 +3,13 @@ import StarIcon from "../../assets/svgs/star.svg?react";
 import { Tag } from "../ui/Tag";
 import { IMAGES_BASE_URL } from "../../lib/constants";
 import { formatRuntime } from "../../lib/utils";
-import useFavouriteMoviesStore from "../../app/favouriteMoviesStore";
 import { Heart } from "lucide-react";
+import { useFavouriteHandler } from "../../hooks/useFavouriteHandler";
 
 export const MovieCard = ({ movie }) => {
   const [isHovered, setIsHovered] = useState(false);
-  const { addFavourite, favouriteMovies, removeFavourite } =
-    useFavouriteMoviesStore();
 
-  const handleAddFavoriteClick = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    if (!favouriteMovies.includes(movie)) {
-      addFavourite(movie);
-    } else {
-      removeFavourite(movie.id);
-    }
-  };
+  const { isFavourite, handleClick } = useFavouriteHandler(movie);
 
   return (
     <div
@@ -61,13 +51,11 @@ export const MovieCard = ({ movie }) => {
           <div className="absolute rounded-xl inset-0 bg-gradient-to-t from-black via-black/90 to-black/70 flex flex-col justify-between p-3 sm:p-4 md:p-5 lg:p-6 transition-all duration-300">
             <div
               className="p-1.5 max-w-8 w-full rounded-full backdrop-blur-sm cursor-pointer transition-colors duration-200"
-              onClick={handleAddFavoriteClick}
+              onClick={handleClick}
             >
               <Heart
                 className={`w-4 h-4 sm:w-5 sm:h-5 ${
-                  favouriteMovies.includes(movie)
-                    ? "stroke-red-500"
-                    : "stroke-white"
+                  isFavourite ? "stroke-red-500" : "stroke-white"
                 }`}
               />
             </div>

@@ -13,15 +13,18 @@ import StarIcon from "../../../assets/svgs/star.svg?react";
 import { IMAGES_BASE_URL } from "../../../lib/constants";
 import { MovieButton } from "../../../components/ui/MovieButton";
 import { Tag } from "../../../components/ui/Tag";
-import useFavouriteMoviesStore from "../../../app/favouriteMoviesStore";
+// import useFavouriteMoviesStore from "../../../app/favouriteMoviesStore";
 import { formatDate, formatRuntime, getStarRating } from "../../../lib/utils";
 import { useQuery } from "@tanstack/react-query";
 import { SafeRender } from "../../../components/layout/SafeRender";
+import { useFavouriteHandler } from "../../../hooks/useFavouriteHandler";
 
 const MoviesDetail = () => {
   const { id } = useParams();
-  const { addFavourite, removeFavourite, favouriteMovies } =
-    useFavouriteMoviesStore();
+  // const { addFavourite, removeFavourite } = useFavouriteMoviesStore();
+  // const favouriteMovies = useFavouriteMoviesStore(
+  //   (state) => state.favouriteMovies
+  // );
 
   const fetchMovies = async () => await MoviesAPI.getMovieDetail(Number(id));
 
@@ -30,18 +33,7 @@ const MoviesDetail = () => {
     queryFn: fetchMovies,
   });
   const movie = data?.data;
-
-  const isFavourite = favouriteMovies.some(
-    (favMovie) => favMovie.id === movie?.id
-  );
-
-  const handleFavourite = (movie) => () => {
-    if (isFavourite) {
-      removeFavourite(movie?.id);
-    } else {
-      addFavourite(movie);
-    }
-  };
+  const { isFavourite, handleClick } = useFavouriteHandler(movie);
 
   return (
     <SafeRender error={error} isLoading={isLoading}>
@@ -130,7 +122,7 @@ const MoviesDetail = () => {
                   </Link>
 
                   <button
-                    onClick={handleFavourite(movie)}
+                    onClick={handleClick}
                     className="flex items-center space-x-3 backdrop-blur-sm border px-6 py-4 rounded-xl font-semibold transition-all duration-300 cursor-pointer bg-white/10 border-white/20 hover:bg-white/20"
                   >
                     <HeartIcon

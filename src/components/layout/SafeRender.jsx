@@ -12,12 +12,14 @@ export const SafeRender = ({
 }) => {
   return (
     <HeaderFooter>
-      <div className="my-[74px] px-4 sm:px-6 md:px-8">
-        <Search handleSearch={handleSearch} search={search} />
-      </div>
+      {handleSearch && (
+        <div className="mt-[74px] px-4 sm:px-6 md:px-8">
+          <Search handleSearch={handleSearch} search={search} />
+        </div>
+      )}
 
       {error ? (
-        <DisplayError errorMessage={error.message} cause={error?.cause} />
+        <DisplayError errorMessage={error.message} />
       ) : isLoading ? (
         <Loader />
       ) : (
